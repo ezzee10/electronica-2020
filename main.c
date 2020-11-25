@@ -54,14 +54,19 @@ char anio_d;
 int anio=20;                //año 2020 -> 00001110
 int mes=11;                  //mes enero-> 00000001 (1) .... dici-> 00001100 (12)
 int diasem=2;               //0 Dom , 1 Lun , 2 Mar......, 6 Sab
-int dia=16;                  //dia 01 -> 00000001.....31 -> 00011111
+int dia=6;                  //dia 01 -> 00000001.....31 -> 00011111
 int hora=18;                 //hora 00 -> 00000000.....24 -> 00011000
 int minuto=55;               //variables de numeros enteros que permiten
 int segundo=0;              //representar los valores en el LCD
 
+
 rtccTime RtccTime; // Inicializa la estructura de tiempo
 rtccTime RtccTimeVal;
 rtccDate RtccDate;//Inicializa la estructura de Fecha
+
+//Posiciones de los elementos para cambiar
+
+int posicionesLeft[] = {10, 20, 23, 25, 30, 33};
 
 char  Sw_Up = 0;
 char  Sw_Down = 0;
@@ -94,6 +99,7 @@ void lee_temperatura(void);
 void Write_RTC(void);
 void Read_RTC(void);
 void Delay_6seg(void);
+void ManejaMovimientos();
 
 /**********************************************************************************
  COMANDOS DEL LCD
@@ -146,7 +152,8 @@ Write_RTC();                    //Escribe los valores por defecto en el RTCC
 Lcd_Init();
 Lcd_Cmd(LCD_CLEAR);
 Lcd_Cmd(LCD_CURSOR_OFF);
-__delay_ms(98);
+
+//__delay_ms(98);
 /*
 Lcd_Out(1, 1, "Primera fila");
 Lcd_Out(2, 1, "Segunda fila");
@@ -162,34 +169,23 @@ while(1){
     //if (CuentamSeg >= 26){CuentamSeg = 0;V_Principal();}
     V_Principal();
     if(SW_Left == 0){
+        
+        //diasem_tr = diasem;
             
         Lcd_Out(1, 0, "Program del reloj");
-        char diasem_tr = diasem;
-        for(i=0 ;i<30;i++){
-            __delay_ms(90);
-            if(SW_Up == 0){
-                i=0;
-                diasem_tr++;
-                Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
-                //while(SW_Up == 0);
-            }
-            if(SW_Right == 0){
-                
-            }
-            if(SW_Center == 0){
-                diasem = diasem_tr;
-                Write_RTC();
-                CuentamSeg = 26;
-                break;
-            }
-            CuentamSeg = 26;
-        }
+        
+        //Delay_6seg();
+        
+        ManejaMovimientos();
+        
+        
              
     }
 
     if(SW_Down == 0){
     //lectura = 222;
         sprintf(buffer1,"%03u",lectura);
+        
         Lcd_Out(4,0,buffer1);
     }
 
@@ -377,4 +373,65 @@ char* Convert_diasem(int dia){
                 }
     }
     return buffer_dia;
+}
+
+void ManejaMovimientos(){
+    
+    char diasem_tr = diasem;
+    //char dia_tr[4];
+    //int dia_trv = dia;
+    char dia_tr = dia;
+    
+    char mes_tr = mes;
+    char anio_tr = anio;
+    int posicion = 0;
+    Lcd_Cmd(LCD_UNDERLINE_ON);
+    Lcd_Out(2, 0, "" ); 
+    
+    
+    for(i=0 ;i<30;i++){
+       
+        
+        __delay_ms(90);
+        
+        if(SW_Up == 0){
+            i=0;
+            //Lcd_Cmd(LCD_UNDERLINE_ON);
+            if(posicion == 0){
+                diasem_tr++;
+                Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
+                Lcd_Out(2, 0, "" ); 
+            }else if(posicion != 0){
+                dia_tr++;
+                sprintf(buffer1,"%02u",dia_tr);
+                //sprintf(dia_tr, "%d", dia_trv);
+                Lcd_Out(3, 0, buffer1);
+                Lcd_Out(3, 0, "" ); 
+            }
+           
+            
+            
+                
+        }
+        if(SW_Right == 0){
+            posicion++;
+            i=0;
+            Lcd_Out(3, 0, "" );  
+            
+        }
+        if(SW_Center == 0){
+            diasem = diasem_tr;
+            dia = dia_tr;
+            mes = mes_tr;
+            Write_RTC();
+            //  CuentamSeg = 26;
+            break;
+        }
+    }
+    
+     Lcd_Cmd(LCD_CURSOR_OFF);
+}
+
+char* convertirApunteroChar(int numero){
+    
 }

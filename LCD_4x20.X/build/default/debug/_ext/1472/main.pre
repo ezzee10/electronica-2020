@@ -10065,7 +10065,7 @@ char anio_d;
 int anio=20;
 int mes=11;
 int diasem=2;
-int dia=6;
+int dia=16;
 int hora=18;
 int minuto=55;
 int segundo=0;
@@ -10129,6 +10129,8 @@ Lcd_Init();
 Lcd_Cmd(1);
 Lcd_Cmd(12);
 
+_delay((unsigned long)((98)*(8000000/4000.0)));
+
 # 163
 _delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));
 Lcd_Cmd(1);
@@ -10155,7 +10157,6 @@ ManejaMovimientos();
 if(Sw_Down = PORTCbits.RC4 == 0){
 
 sprintf(buffer1,"%03u",lectura);
-
 Lcd_Out(4,0,buffer1);
 }
 
@@ -10184,7 +10185,7 @@ _delay((unsigned long)((10)*(8000000/4000.0)));
 
 }
 
-# 220
+# 219
 void V_Principal(void)
 {
 Read_RTC();
@@ -10203,13 +10204,13 @@ Lcd_Out(4,0,buffer1);
 
 }
 
-# 242
+# 241
 void V_ProgReloj(void)
 {
 
 }
 
-# 253
+# 252
 void Write_RTC(void)
 {
 RtccWrOn();
@@ -10241,7 +10242,7 @@ RtccWriteDate(&RtccDate,1);
 (RTCCFGbits.RTCEN=1);
 }
 
-# 291
+# 290
 void Read_RTC(void)
 
 {
@@ -10269,7 +10270,7 @@ mes=mes_d*10+mes_u;
 anio=anio_d*10+anio_u;
 }
 
-# 324
+# 323
 void lee_temperatura(void){
 
 ADCON0bits.ADON = 1;
@@ -10326,22 +10327,13 @@ return buffer_dia;
 
 void ManejaMovimientos(){
 
+for(i=0 ;i<30;i++){
+_delay((unsigned long)((90)*(8000000/4000.0)));
 char diasem_tr = diasem;
-
-
 char dia_tr = dia;
-
 char mes_tr = mes;
 char anio_tr = anio;
 int posicion = 0;
-Lcd_Cmd(14);
-Lcd_Out(2, 0, "" );
-
-
-for(i=0 ;i<30;i++){
-
-
-_delay((unsigned long)((90)*(8000000/4000.0)));
 
 if(Sw_Up = PORTAbits.RA3 == 0){
 i=0;
@@ -10349,13 +10341,10 @@ i=0;
 if(posicion == 0){
 diasem_tr++;
 Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
-Lcd_Out(2, 0, "" );
-}else if(posicion != 0){
-dia_tr++;
-sprintf(buffer1,"%02u",dia_tr);
-
-Lcd_Out(3, 0, buffer1);
-Lcd_Out(3, 0, "" );
+printf(posicion);
+}else if(posicion == 1){
+mes_tr++;
+Lcd_Out(2, 3, mes_tr);
 }
 
 
@@ -10365,7 +10354,7 @@ Lcd_Out(3, 0, "" );
 if(Sw_Right = PORTAbits.RA2 == 0){
 posicion++;
 i=0;
-Lcd_Out(3, 0, "" );
+
 
 }
 if(Sw_Center = PORTAbits.RA5 == 0){
@@ -10377,10 +10366,4 @@ Write_RTC();
 break;
 }
 }
-
-Lcd_Cmd(12);
-}
-
-char* convertirApunteroChar(int numero){
-
 }
