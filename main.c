@@ -9,6 +9,7 @@
 #define _XTAL_FREQ 8000000
 #include "lcd.h"
 #include <rtcc.h>
+#include <string.h>
 
 #pragma config CPUDIV=OSC1
 #pragma config CP0=OFF
@@ -66,7 +67,7 @@ rtccDate RtccDate;//Inicializa la estructura de Fecha
 
 //Posiciones de los elementos para cambiar
 
-int posicionesLeft[] = {10, 20, 23, 25, 30, 33};
+int posicionesLeft[] = {2,0,3,0,3,3,3,6,4,0,4,3};
 
 char  Sw_Up = 0;
 char  Sw_Down = 0;
@@ -378,12 +379,11 @@ char* Convert_diasem(int dia){
 void ManejaMovimientos(){
     
     char diasem_tr = diasem;
-    //char dia_tr[4];
-    //int dia_trv = dia;
     char dia_tr = dia;
-    
     char mes_tr = mes;
     char anio_tr = anio;
+    char hora_tr = hora;
+    char minuto_tr = minuto;
     int posicion = 0;
     Lcd_Cmd(LCD_UNDERLINE_ON);
     Lcd_Out(2, 0, "" ); 
@@ -391,38 +391,58 @@ void ManejaMovimientos(){
     
     for(i=0 ;i<30;i++){
        
-        
         __delay_ms(90);
         
         if(SW_Up == 0){
+                
             i=0;
-            //Lcd_Cmd(LCD_UNDERLINE_ON);
             if(posicion == 0){
                 diasem_tr++;
                 Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
                 Lcd_Out(2, 0, "" ); 
-            }else if(posicion != 0){
+            }else if(posicion == 2){
                 dia_tr++;
                 sprintf(buffer1,"%02u",dia_tr);
-                //sprintf(dia_tr, "%d", dia_trv);
                 Lcd_Out(3, 0, buffer1);
                 Lcd_Out(3, 0, "" ); 
+            }else if(posicion == 4){
+                mes_tr++;
+                sprintf(buffer1,"%02u",mes_tr);
+                Lcd_Out(3, 3, buffer1);
+                Lcd_Out(3, 3, "" ); 
+            }else if(posicion == 6){
+                anio_tr++;
+                sprintf(buffer1,"%02u",anio_tr);
+                Lcd_Out(3, 6, buffer1);
+                Lcd_Out(3, 6, "" ); 
+            }else if(posicion == 8){
+                hora_tr++;
+                sprintf(buffer1,"%02u",hora_tr);
+                Lcd_Out(4, 0, buffer1);
+                Lcd_Out(4, 0, "" ); 
+            }else if(posicion == 10){
+                minuto_tr++;
+                sprintf(buffer1,"%02u",minuto_tr);
+                Lcd_Out(4, 3, buffer1);
+                Lcd_Out(4, 3, "" ); 
             }
-           
-            
-            
-                
+     
         }
         if(SW_Right == 0){
-            posicion++;
-            i=0;
-            Lcd_Out(3, 0, "" );  
             
+            posicion+=2;
+            i=0;
+            Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion+1], "" );  
+            
+           
         }
         if(SW_Center == 0){
             diasem = diasem_tr;
             dia = dia_tr;
             mes = mes_tr;
+            anio = anio_tr;
+            hora = hora_tr;
+            minuto = minuto_tr;
             Write_RTC();
             //  CuentamSeg = 26;
             break;
@@ -432,6 +452,3 @@ void ManejaMovimientos(){
      Lcd_Cmd(LCD_CURSOR_OFF);
 }
 
-char* convertirApunteroChar(int numero){
-    
-}
