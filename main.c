@@ -54,7 +54,7 @@ char anio_u;
 char anio_d;
 int anio=20;                //año 2020 -> 00001110
 int mes=11;                  //mes enero-> 00000001 (1) .... dici-> 00001100 (12)
-int diasem=2;               //0 Dom , 1 Lun , 2 Mar......, 6 Sab
+int diasem=0;               //0 Dom , 1 Lun , 2 Mar......, 6 Sab
 int dia=6;                  //dia 01 -> 00000001.....31 -> 00011111
 int hora=18;                 //hora 00 -> 00000000.....24 -> 00011000
 int minuto=55;               //variables de numeros enteros que permiten
@@ -390,31 +390,31 @@ void ManejaMovimientos(){
     
             i=0;
             if(posicion == 0){
-                diasem_tr++;
+                if(diasem_tr<6){diasem_tr++;}
                 Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
                 Lcd_Out(2, 0, "" ); 
             }else if(posicion == 2){
-                dia_tr++;
+                if(dia_tr<31){dia_tr++;}
                 sprintf(buffer1,"%02u",dia_tr);
                 Lcd_Out(3, 0, buffer1);
                 Lcd_Out(3, 0, "" ); 
             }else if(posicion == 4){
-                mes_tr++;
+                if(mes_tr<12){mes_tr++;}
                 sprintf(buffer1,"%02u",mes_tr);
                 Lcd_Out(3, 3, buffer1);
                 Lcd_Out(3, 3, "" ); 
             }else if(posicion == 6){
-                anio_tr++;
+                if(anio_tr<99){anio_tr++;}
                 sprintf(buffer1,"%02u",anio_tr);
                 Lcd_Out(3, 6, buffer1);
                 Lcd_Out(3, 6, "" ); 
             }else if(posicion == 8){
-                hora_tr++;
+                if(hora_tr<23){hora_tr++;}
                 sprintf(buffer1,"%02u",hora_tr);
                 Lcd_Out(4, 0, buffer1);
                 Lcd_Out(4, 0, "" ); 
             }else if(posicion == 10){
-                minuto_tr++;
+                if(minuto_tr<59){minuto_tr++;}
                 sprintf(buffer1,"%02u",minuto_tr);
                 Lcd_Out(4, 3, buffer1);
                 Lcd_Out(4, 3, "" ); 
@@ -441,31 +441,31 @@ void ManejaMovimientos(){
             
             i=0;
             if(posicion == 0){
-                diasem_tr--;
+                if(diasem_tr>0){diasem_tr--;}
                 Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
                 Lcd_Out(2, 0, "" ); 
             }else if(posicion == 2){
-                dia_tr--;
+                if(dia_tr>1){dia_tr--;}
                 sprintf(buffer1,"%02u",dia_tr);
                 Lcd_Out(3, 0, buffer1);
                 Lcd_Out(3, 0, "" ); 
             }else if(posicion == 4){
-                mes_tr--;
+                if(mes_tr>1){mes_tr--;}
                 sprintf(buffer1,"%02u",mes_tr);
                 Lcd_Out(3, 3, buffer1);
                 Lcd_Out(3, 3, "" ); 
             }else if(posicion == 6){
-                anio_tr--;
+                if(anio_tr>20){anio_tr--;}
                 sprintf(buffer1,"%02u",anio_tr);
                 Lcd_Out(3, 6, buffer1);
                 Lcd_Out(3, 6, "" ); 
             }else if(posicion == 8){
-                hora_tr--;
+                if(hora_tr>0){hora_tr--;}
                 sprintf(buffer1,"%02u",hora_tr);
                 Lcd_Out(4, 0, buffer1);
                 Lcd_Out(4, 0, "" ); 
             }else if(posicion == 10){
-                minuto_tr--;
+                if(minuto_tr>0){minuto_tr--;}
                 sprintf(buffer1,"%02u",minuto_tr);
                 Lcd_Out(4, 3, buffer1);
                 Lcd_Out(4, 3, "" ); 

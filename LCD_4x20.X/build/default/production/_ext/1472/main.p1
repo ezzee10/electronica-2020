@@ -8520,9 +8520,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "57
 [v _diasem `i ~T0 @X0 1 e ]
 [i _diasem
--> 2 `i
+-> 0 `i
 ]
-[; ;main.c: 57: int diasem=2;
+[; ;main.c: 57: int diasem=0;
 "58
 [v _dia `i ~T0 @X0 1 e ]
 [i _dia
@@ -9276,9 +9276,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 "392
 [e $ ! == _posicion -> 0 `i 1099  ]
 {
-[; ;main.c: 393: diasem_tr++;
+[; ;main.c: 393: if(diasem_tr<6){diasem_tr++;}
 "393
+[e $ ! < -> _diasem_tr `i -> 6 `i 1100  ]
+{
 [e ++ _diasem_tr -> -> 1 `i `uc ]
+}
+[e :U 1100 ]
 [; ;main.c: 394: Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
 "394
 [e ( _Lcd_Out (3 , , -> -> 2 `i `uc -> -> 0 `i `uc -> ( _Convert_diasem (1 -> _diasem_tr `i `*Cuc ]
@@ -9288,13 +9292,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "396
 }
 [; ;main.c: 396: }else if(posicion == 2){
-[e $U 1100  ]
+[e $U 1101  ]
 [e :U 1099 ]
-[e $ ! == _posicion -> 2 `i 1101  ]
+[e $ ! == _posicion -> 2 `i 1102  ]
 {
-[; ;main.c: 397: dia_tr++;
+[; ;main.c: 397: if(dia_tr<31){dia_tr++;}
 "397
+[e $ ! < -> _dia_tr `i -> 31 `i 1103  ]
+{
 [e ++ _dia_tr -> -> 1 `i `uc ]
+}
+[e :U 1103 ]
 [; ;main.c: 398: sprintf(buffer1,"%02u",dia_tr);
 "398
 [e ( _sprintf (1 , (. , &U _buffer1 :s 25C -> _dia_tr `i ]
@@ -9307,13 +9315,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "401
 }
 [; ;main.c: 401: }else if(posicion == 4){
-[e $U 1102  ]
-[e :U 1101 ]
-[e $ ! == _posicion -> 4 `i 1103  ]
+[e $U 1104  ]
+[e :U 1102 ]
+[e $ ! == _posicion -> 4 `i 1105  ]
 {
-[; ;main.c: 402: mes_tr++;
+[; ;main.c: 402: if(mes_tr<12){mes_tr++;}
 "402
+[e $ ! < -> _mes_tr `i -> 12 `i 1106  ]
+{
 [e ++ _mes_tr -> -> 1 `i `uc ]
+}
+[e :U 1106 ]
 [; ;main.c: 403: sprintf(buffer1,"%02u",mes_tr);
 "403
 [e ( _sprintf (1 , (. , &U _buffer1 :s 27C -> _mes_tr `i ]
@@ -9326,13 +9338,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "406
 }
 [; ;main.c: 406: }else if(posicion == 6){
-[e $U 1104  ]
-[e :U 1103 ]
-[e $ ! == _posicion -> 6 `i 1105  ]
+[e $U 1107  ]
+[e :U 1105 ]
+[e $ ! == _posicion -> 6 `i 1108  ]
 {
-[; ;main.c: 407: anio_tr++;
+[; ;main.c: 407: if(anio_tr<99){anio_tr++;}
 "407
+[e $ ! < -> _anio_tr `i -> 99 `i 1109  ]
+{
 [e ++ _anio_tr -> -> 1 `i `uc ]
+}
+[e :U 1109 ]
 [; ;main.c: 408: sprintf(buffer1,"%02u",anio_tr);
 "408
 [e ( _sprintf (1 , (. , &U _buffer1 :s 29C -> _anio_tr `i ]
@@ -9345,13 +9361,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "411
 }
 [; ;main.c: 411: }else if(posicion == 8){
-[e $U 1106  ]
-[e :U 1105 ]
-[e $ ! == _posicion -> 8 `i 1107  ]
+[e $U 1110  ]
+[e :U 1108 ]
+[e $ ! == _posicion -> 8 `i 1111  ]
 {
-[; ;main.c: 412: hora_tr++;
+[; ;main.c: 412: if(hora_tr<23){hora_tr++;}
 "412
+[e $ ! < -> _hora_tr `i -> 23 `i 1112  ]
+{
 [e ++ _hora_tr -> -> 1 `i `uc ]
+}
+[e :U 1112 ]
 [; ;main.c: 413: sprintf(buffer1,"%02u",hora_tr);
 "413
 [e ( _sprintf (1 , (. , &U _buffer1 :s 31C -> _hora_tr `i ]
@@ -9364,13 +9384,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "416
 }
 [; ;main.c: 416: }else if(posicion == 10){
-[e $U 1108  ]
-[e :U 1107 ]
-[e $ ! == _posicion -> 10 `i 1109  ]
+[e $U 1113  ]
+[e :U 1111 ]
+[e $ ! == _posicion -> 10 `i 1114  ]
 {
-[; ;main.c: 417: minuto_tr++;
+[; ;main.c: 417: if(minuto_tr<59){minuto_tr++;}
 "417
+[e $ ! < -> _minuto_tr `i -> 59 `i 1115  ]
+{
 [e ++ _minuto_tr -> -> 1 `i `uc ]
+}
+[e :U 1115 ]
 [; ;main.c: 418: sprintf(buffer1,"%02u",minuto_tr);
 "418
 [e ( _sprintf (1 , (. , &U _buffer1 :s 33C -> _minuto_tr `i ]
@@ -9382,20 +9406,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Lcd_Out (3 , , -> -> 4 `i `uc -> -> 3 `i `uc :s 34C ]
 "421
 }
-[e :U 1109 ]
+[e :U 1114 ]
 "423
-[e :U 1108 ]
-[e :U 1106 ]
+[e :U 1113 ]
+[e :U 1110 ]
+[e :U 1107 ]
 [e :U 1104 ]
-[e :U 1102 ]
-[e :U 1100 ]
+[e :U 1101 ]
 }
 [e :U 1098 ]
 [; ;main.c: 421: }
 [; ;main.c: 423: }
 [; ;main.c: 424: if(Sw_Right = PORTAbits.RA2 == 0){
 "424
-[e $ ! != -> = _Sw_Right -> -> == -> . . _PORTAbits 0 2 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1110  ]
+[e $ ! != -> = _Sw_Right -> -> == -> . . _PORTAbits 0 2 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1116  ]
 {
 [; ;main.c: 426: posicion+=2;
 "426
@@ -9408,11 +9432,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Lcd_Out (3 , , -> *U + &U _posicionesLeft * -> -> _posicion `ui `ux -> -> # *U &U _posicionesLeft `ui `ux `uc -> *U + &U _posicionesLeft * -> -> + _posicion -> 1 `i `ui `ux -> -> # *U &U _posicionesLeft `ui `ux `uc :s 35C ]
 "430
 }
-[e :U 1110 ]
+[e :U 1116 ]
 [; ;main.c: 430: }
 [; ;main.c: 432: if(Sw_Left = PORTAbits.RA0 == 0){
 "432
-[e $ ! != -> = _Sw_Left -> -> == -> . . _PORTAbits 0 0 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1111  ]
+[e $ ! != -> = _Sw_Left -> -> == -> . . _PORTAbits 0 0 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1117  ]
 {
 [; ;main.c: 434: posicion-=2;
 "434
@@ -9425,22 +9449,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Lcd_Out (3 , , -> *U + &U _posicionesLeft * -> -> _posicion `ui `ux -> -> # *U &U _posicionesLeft `ui `ux `uc -> *U + &U _posicionesLeft * -> -> + _posicion -> 1 `i `ui `ux -> -> # *U &U _posicionesLeft `ui `ux `uc :s 36C ]
 "438
 }
-[e :U 1111 ]
+[e :U 1117 ]
 [; ;main.c: 438: }
 [; ;main.c: 440: if(Sw_Down = PORTCbits.RC4 == 0){
 "440
-[e $ ! != -> = _Sw_Down -> -> == -> . . _PORTCbits 0 4 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1112  ]
+[e $ ! != -> = _Sw_Down -> -> == -> . . _PORTCbits 0 4 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1118  ]
 {
 [; ;main.c: 442: i=0;
 "442
 [e = _i -> 0 `i ]
 [; ;main.c: 443: if(posicion == 0){
 "443
-[e $ ! == _posicion -> 0 `i 1113  ]
+[e $ ! == _posicion -> 0 `i 1119  ]
 {
-[; ;main.c: 444: diasem_tr--;
+[; ;main.c: 444: if(diasem_tr>0){diasem_tr--;}
 "444
+[e $ ! > -> _diasem_tr `i -> 0 `i 1120  ]
+{
 [e -- _diasem_tr -> -> 1 `i `uc ]
+}
+[e :U 1120 ]
 [; ;main.c: 445: Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
 "445
 [e ( _Lcd_Out (3 , , -> -> 2 `i `uc -> -> 0 `i `uc -> ( _Convert_diasem (1 -> _diasem_tr `i `*Cuc ]
@@ -9450,13 +9478,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "447
 }
 [; ;main.c: 447: }else if(posicion == 2){
-[e $U 1114  ]
-[e :U 1113 ]
-[e $ ! == _posicion -> 2 `i 1115  ]
+[e $U 1121  ]
+[e :U 1119 ]
+[e $ ! == _posicion -> 2 `i 1122  ]
 {
-[; ;main.c: 448: dia_tr--;
+[; ;main.c: 448: if(dia_tr>1){dia_tr--;}
 "448
+[e $ ! > -> _dia_tr `i -> 1 `i 1123  ]
+{
 [e -- _dia_tr -> -> 1 `i `uc ]
+}
+[e :U 1123 ]
 [; ;main.c: 449: sprintf(buffer1,"%02u",dia_tr);
 "449
 [e ( _sprintf (1 , (. , &U _buffer1 :s 38C -> _dia_tr `i ]
@@ -9469,13 +9501,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "452
 }
 [; ;main.c: 452: }else if(posicion == 4){
-[e $U 1116  ]
-[e :U 1115 ]
-[e $ ! == _posicion -> 4 `i 1117  ]
+[e $U 1124  ]
+[e :U 1122 ]
+[e $ ! == _posicion -> 4 `i 1125  ]
 {
-[; ;main.c: 453: mes_tr--;
+[; ;main.c: 453: if(mes_tr>1){mes_tr--;}
 "453
+[e $ ! > -> _mes_tr `i -> 1 `i 1126  ]
+{
 [e -- _mes_tr -> -> 1 `i `uc ]
+}
+[e :U 1126 ]
 [; ;main.c: 454: sprintf(buffer1,"%02u",mes_tr);
 "454
 [e ( _sprintf (1 , (. , &U _buffer1 :s 40C -> _mes_tr `i ]
@@ -9488,13 +9524,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "457
 }
 [; ;main.c: 457: }else if(posicion == 6){
-[e $U 1118  ]
-[e :U 1117 ]
-[e $ ! == _posicion -> 6 `i 1119  ]
+[e $U 1127  ]
+[e :U 1125 ]
+[e $ ! == _posicion -> 6 `i 1128  ]
 {
-[; ;main.c: 458: anio_tr--;
+[; ;main.c: 458: if(anio_tr>20){anio_tr--;}
 "458
+[e $ ! > -> _anio_tr `i -> 20 `i 1129  ]
+{
 [e -- _anio_tr -> -> 1 `i `uc ]
+}
+[e :U 1129 ]
 [; ;main.c: 459: sprintf(buffer1,"%02u",anio_tr);
 "459
 [e ( _sprintf (1 , (. , &U _buffer1 :s 42C -> _anio_tr `i ]
@@ -9507,13 +9547,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "462
 }
 [; ;main.c: 462: }else if(posicion == 8){
-[e $U 1120  ]
-[e :U 1119 ]
-[e $ ! == _posicion -> 8 `i 1121  ]
+[e $U 1130  ]
+[e :U 1128 ]
+[e $ ! == _posicion -> 8 `i 1131  ]
 {
-[; ;main.c: 463: hora_tr--;
+[; ;main.c: 463: if(hora_tr>0){hora_tr--;}
 "463
+[e $ ! > -> _hora_tr `i -> 0 `i 1132  ]
+{
 [e -- _hora_tr -> -> 1 `i `uc ]
+}
+[e :U 1132 ]
 [; ;main.c: 464: sprintf(buffer1,"%02u",hora_tr);
 "464
 [e ( _sprintf (1 , (. , &U _buffer1 :s 44C -> _hora_tr `i ]
@@ -9526,13 +9570,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "467
 }
 [; ;main.c: 467: }else if(posicion == 10){
-[e $U 1122  ]
-[e :U 1121 ]
-[e $ ! == _posicion -> 10 `i 1123  ]
+[e $U 1133  ]
+[e :U 1131 ]
+[e $ ! == _posicion -> 10 `i 1134  ]
 {
-[; ;main.c: 468: minuto_tr--;
+[; ;main.c: 468: if(minuto_tr>0){minuto_tr--;}
 "468
+[e $ ! > -> _minuto_tr `i -> 0 `i 1135  ]
+{
 [e -- _minuto_tr -> -> 1 `i `uc ]
+}
+[e :U 1135 ]
 [; ;main.c: 469: sprintf(buffer1,"%02u",minuto_tr);
 "469
 [e ( _sprintf (1 , (. , &U _buffer1 :s 46C -> _minuto_tr `i ]
@@ -9544,20 +9592,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _Lcd_Out (3 , , -> -> 4 `i `uc -> -> 3 `i `uc :s 47C ]
 "472
 }
-[e :U 1123 ]
+[e :U 1134 ]
 "473
-[e :U 1122 ]
-[e :U 1120 ]
-[e :U 1118 ]
-[e :U 1116 ]
-[e :U 1114 ]
+[e :U 1133 ]
+[e :U 1130 ]
+[e :U 1127 ]
+[e :U 1124 ]
+[e :U 1121 ]
 }
-[e :U 1112 ]
+[e :U 1118 ]
 [; ;main.c: 472: }
 [; ;main.c: 473: }
 [; ;main.c: 475: if(Sw_Center = PORTAbits.RA5 == 0){
 "475
-[e $ ! != -> = _Sw_Center -> -> == -> . . _PORTAbits 0 5 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1124  ]
+[e $ ! != -> = _Sw_Center -> -> == -> . . _PORTAbits 0 5 `i -> 0 `i `i `uc `i -> -> -> 0 `i `uc `i 1136  ]
 {
 [; ;main.c: 476: diasem = diasem_tr;
 "476
@@ -9585,7 +9633,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 1096  ]
 "485
 }
-[e :U 1124 ]
+[e :U 1136 ]
 "486
 }
 "385
