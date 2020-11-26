@@ -104,9 +104,9 @@ RTCCPTR_MASK_YEAR 3
 [v _Read_RTC Read_RTC `(v  1 e 0 0 ]
 "325
 [v _lee_temperatura lee_temperatura `(v  1 e 0 0 ]
-"342
+"335
 [v _Convert_diasem Convert_diasem `(*.39uc  1 e 2 0 ]
-"379
+"372
 [v _ManejaMovimientos ManejaMovimientos `(v  1 e 0 0 ]
 "8 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -423,21 +423,21 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S74 . 1 `S42 1 . 1 0 `S51 1 . 1 0 `S53 1 . 1 0 `S56 1 . 1 0 `S59 1 . 1 0 `S62 1 . 1 0 `S65 1 . 1 0 `S68 1 . 1 0 `S71 1 . 1 0 ]
 [v _LATBbits LATBbits `VES74  1 e 1 @3978 ]
-[s S1500 . 1 `uc 1 ALRMPTR 1 0 :2:0 
+[s S1511 . 1 `uc 1 ALRMPTR 1 0 :2:0 
 `uc 1 AMASK 1 0 :4:2 
 `uc 1 CHIME 1 0 :1:6 
 `uc 1 ALRMEN 1 0 :1:7 
 ]
 "6740
-[s S1505 . 1 `uc 1 ALRMPTR0 1 0 :1:0 
+[s S1516 . 1 `uc 1 ALRMPTR0 1 0 :1:0 
 `uc 1 ALRMPTR1 1 0 :1:1 
 `uc 1 AMASK0 1 0 :1:2 
 `uc 1 AMASK1 1 0 :1:3 
 `uc 1 AMASK2 1 0 :1:4 
 `uc 1 AMASK3 1 0 :1:5 
 ]
-[u S1512 . 1 `S1500 1 . 1 0 `S1505 1 . 1 0 ]
-[v _ALRMCFGbits ALRMCFGbits `VES1512  1 e 1 @3985 ]
+[u S1523 . 1 `S1511 1 . 1 0 `S1516 1 . 1 0 ]
+[v _ALRMCFGbits ALRMCFGbits `VES1523  1 e 1 @3985 ]
 "6794
 [v _TRISA TRISA `VEuc  1 e 1 @3986 ]
 "6850
@@ -599,7 +599,7 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S206 . 1 `S193 1 . 1 0 `S199 1 . 1 0 ]
 [v _OSCCONbits OSCCONbits `VES206  1 e 1 @4051 ]
-[s S1307 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S1318 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INT0IF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -609,7 +609,7 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 GIE_GIEH 1 0 :1:7 
 ]
 "14949
-[s S1316 . 1 `uc 1 . 1 0 :1:0 
+[s S1327 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 INT0F 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -618,12 +618,12 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
-[s S1325 . 1 `uc 1 . 1 0 :6:0 
+[s S1336 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 GIEL 1 0 :1:6 
 `uc 1 GIEH 1 0 :1:7 
 ]
-[u S1342 . 1 `S1307 1 . 1 0 `S1316 1 . 1 0 `S1325 1 . 1 0 `S1316 1 . 1 0 `S1325 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES1342  1 e 1 @4082 ]
+[u S1353 . 1 `S1318 1 . 1 0 `S1327 1 . 1 0 `S1336 1 . 1 0 `S1327 1 . 1 0 `S1336 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES1353  1 e 1 @4082 ]
 "354 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\doprnt.c
 [v _dpowers dpowers `C[5]ui  1 s 10 dpowers ]
 "130 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
@@ -676,24 +676,24 @@ RTCCPTR_MASK_YEAR 3
 [v RtccReadDate@pDt pDt `*.39S162  1 p 2 0 ]
 "55
 } 0
-"379 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"372 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _ManejaMovimientos ManejaMovimientos `(v  1 e 0 0 ]
 {
-"387
+"380
 [v ManejaMovimientos@posicion posicion `i  1 a 2 76 ]
-"386
+"379
 [v ManejaMovimientos@minuto_tr minuto_tr `uc  1 a 1 75 ]
-"385
+"378
 [v ManejaMovimientos@hora_tr hora_tr `uc  1 a 1 74 ]
-"384
+"377
 [v ManejaMovimientos@anio_tr anio_tr `uc  1 a 1 73 ]
-"383
+"376
 [v ManejaMovimientos@mes_tr mes_tr `uc  1 a 1 72 ]
-"382
+"375
 [v ManejaMovimientos@dia_tr dia_tr `uc  1 a 1 71 ]
-"381
+"374
 [v ManejaMovimientos@diasem_tr diasem_tr `uc  1 a 1 70 ]
-"453
+"489
 } 0
 "254
 [v _Write_RTC Write_RTC `(v  1 e 0 0 ]
@@ -716,9 +716,9 @@ RTCCPTR_MASK_YEAR 3
 "34 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteTime.c
 [v _RtccWriteTime RtccWriteTime `(E7337  1 e 1 0 ]
 {
-[s S1420 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
+[s S1431 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
 "36
-[s S1423 . 2 `uc 1 b0 1 0 :1:0 
+[s S1434 . 2 `uc 1 b0 1 0 :1:0 
 `uc 1 b1 1 0 :1:1 
 `uc 1 b2 1 0 :1:2 
 `uc 1 b3 1 0 :1:3 
@@ -735,10 +735,10 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 b14 1 1 :1:6 
 `uc 1 b15 1 1 :1:7 
 ]
-[u S1440 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1420 1 byte 2 0 `S1423 1 bits 2 0 ]
-[v RtccWriteTime@tempHourWDay tempHourWDay `S1440  1 a 2 9 ]
+[u S1451 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1431 1 byte 2 0 `S1434 1 bits 2 0 ]
+[v RtccWriteTime@tempHourWDay tempHourWDay `S1451  1 a 2 9 ]
 "37
-[v RtccWriteTime@tempMinSec tempMinSec `S1440  1 a 2 7 ]
+[v RtccWriteTime@tempMinSec tempMinSec `S1451  1 a 2 7 ]
 "40
 [v RtccWriteTime@wasWrEn wasWrEn `E7121  1 a 1 6 ]
 "42
@@ -755,9 +755,9 @@ RTCCPTR_MASK_YEAR 3
 "35 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteDate.c
 [v _RtccWriteDate RtccWriteDate `(E7337  1 e 1 0 ]
 {
-[s S1420 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
+[s S1431 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
 "37
-[s S1423 . 2 `uc 1 b0 1 0 :1:0 
+[s S1434 . 2 `uc 1 b0 1 0 :1:0 
 `uc 1 b1 1 0 :1:1 
 `uc 1 b2 1 0 :1:2 
 `uc 1 b3 1 0 :1:3 
@@ -774,12 +774,12 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 b14 1 1 :1:6 
 `uc 1 b15 1 1 :1:7 
 ]
-[u S1440 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1420 1 byte 2 0 `S1423 1 bits 2 0 ]
-[v RtccWriteDate@tempHourWDay tempHourWDay `S1440  1 a 2 11 ]
+[u S1451 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1431 1 byte 2 0 `S1434 1 bits 2 0 ]
+[v RtccWriteDate@tempHourWDay tempHourWDay `S1451  1 a 2 11 ]
 "38
-[v RtccWriteDate@tempDayMonth tempDayMonth `S1440  1 a 2 9 ]
+[v RtccWriteDate@tempDayMonth tempDayMonth `S1451  1 a 2 9 ]
 "39
-[v RtccWriteDate@tempYear tempYear `S1440  1 a 2 6 ]
+[v RtccWriteDate@tempYear tempYear `S1451  1 a 2 6 ]
 "41
 [v RtccWriteDate@wasWrEn wasWrEn `E7121  1 a 1 8 ]
 "43
@@ -819,14 +819,14 @@ RTCCPTR_MASK_YEAR 3
 [v Lcd_Chr_CP@data data `uc  1 a 1 2 ]
 "137
 } 0
-"342 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"335 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _Convert_diasem Convert_diasem `(*.39uc  1 e 2 0 ]
 {
-"344
+"337
 [v Convert_diasem@buffer_dia buffer_dia `[20]uc  1 a 20 43 ]
-"342
+"335
 [v Convert_diasem@dia dia `i  1 p 2 39 ]
-"377
+"370
 } 0
 "492 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]

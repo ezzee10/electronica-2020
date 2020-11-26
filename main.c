@@ -332,13 +332,6 @@ void lee_temperatura(void){
     ADCON0bits.ADON = 0;     
 }
 
-void Delay_6seg(void){
-    
-    for(i=0 ;i<30;i++){
-           __delay_ms(90);
-        }
-}
-
 char* Convert_diasem(int dia){
     
     unsigned char buffer_dia[20];
@@ -394,7 +387,7 @@ void ManejaMovimientos(){
         __delay_ms(90);
         
         if(SW_Up == 0){
-                
+    
             i=0;
             if(posicion == 0){
                 diasem_tr++;
@@ -433,9 +426,52 @@ void ManejaMovimientos(){
             posicion+=2;
             i=0;
             Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion+1], "" );  
-            
-           
+              
         }
+        
+        if(SW_Left == 0){
+            
+            posicion-=2;
+            i=0;
+            Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion+1], "" );  
+              
+        }
+        
+        if(SW_Down == 0){
+            
+            i=0;
+            if(posicion == 0){
+                diasem_tr--;
+                Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
+                Lcd_Out(2, 0, "" ); 
+            }else if(posicion == 2){
+                dia_tr--;
+                sprintf(buffer1,"%02u",dia_tr);
+                Lcd_Out(3, 0, buffer1);
+                Lcd_Out(3, 0, "" ); 
+            }else if(posicion == 4){
+                mes_tr--;
+                sprintf(buffer1,"%02u",mes_tr);
+                Lcd_Out(3, 3, buffer1);
+                Lcd_Out(3, 3, "" ); 
+            }else if(posicion == 6){
+                anio_tr--;
+                sprintf(buffer1,"%02u",anio_tr);
+                Lcd_Out(3, 6, buffer1);
+                Lcd_Out(3, 6, "" ); 
+            }else if(posicion == 8){
+                hora_tr--;
+                sprintf(buffer1,"%02u",hora_tr);
+                Lcd_Out(4, 0, buffer1);
+                Lcd_Out(4, 0, "" ); 
+            }else if(posicion == 10){
+                minuto_tr--;
+                sprintf(buffer1,"%02u",minuto_tr);
+                Lcd_Out(4, 3, buffer1);
+                Lcd_Out(4, 3, "" ); 
+            }     
+        }
+        
         if(SW_Center == 0){
             diasem = diasem_tr;
             dia = dia_tr;
