@@ -10079,7 +10079,7 @@ extern char * strrichr(const char *, int);
 unsigned char buffer1[20];
 
 
-rtccTimeDate RtccTimeDate ,RtccAlrmTimeDate, Rtcc_read_TimeDate ;
+rtccTimeDate RtccTimeDate, RtccAlrmTimeDate, Rtcc_read_TimeDate;
 
 char segundo_u;
 char segundo_d;
@@ -10094,13 +10094,13 @@ char mes_d;
 char dia_semana;
 char anio_u;
 char anio_d;
-int anio=20;
-int mes=11;
-int diasem=0;
-int dia=6;
-int hora=18;
-int minuto=55;
-int segundo=0;
+int anio = 20;
+int mes = 11;
+int diasem = 0;
+int dia = 6;
+int hora = 23;
+int minuto = 58;
+int segundo = 0;
 
 
 rtccTime RtccTime;
@@ -10109,52 +10109,54 @@ rtccDate RtccDate;
 
 
 
-int posicionesLeft[] = {2,0,3,0,3,3,3,6,4,0,4,3};
-int posicionesUp[] = {2,5,2,8,2,15,2,18,4,5,4,8,4,15,4,18};
+int posicionesLeft[] = {2, 0, 3, 0, 3, 3, 3, 6, 4, 0, 4, 3};
+int posicionesUp[] = {2, 5, 2, 8, 2, 15, 2, 18, 4, 5, 4, 8, 4, 15, 4, 18};
 
 char Sw_Up = 0;
 char Sw_Down = 0;
 char Sw_Left = 0;
 char Sw_Right = 0;
 char Sw_Center = 0;
+char Humedad = 0;
 char Flag_1 = 0;
 int i;
 char CuentamSeg = 0;
 char lectura = 0;
 float Temp_prog = 22.5;
 float Grados = 20;
-char inicio_hora_ilum = 20;
-char inicio_min_ilum = 0;
-char fin_hora_ilum = 23;
-char fin_min_ilum = 59;
-char inicio_hora_riego = 22;
-char inicio_min_riego = 0;
-char fin_hora_riego = 23;
-char fin_min_riego = 59;
+char inicio_hora_ilum = 23;
+char inicio_min_ilum = 59;
+char fin_hora_ilum = 0;
+char fin_min_ilum = 0;
+char inicio_hora_riego = 23;
+char inicio_min_riego = 59;
+char fin_hora_riego = 0;
+char fin_min_riego = 0;
 
-# 105
+# 108
 void V_Principal(void);
 void V_ProgReloj(void);
 void V_ProgRiegoIlum(void);
 char* Convert_diasem(int dia);
+void control_leds_iluminacion(void);
+void control_leds_riego(void);
 void lee_temperatura(void);
 void Write_RTC(void);
 void Read_RTC(void);
 
-# 139
-void main()
-{
-OSCTUNEbits.INTSRC=1;
-OSCTUNEbits.PLLEN=0;
-OSCCONbits.IRCF0=1;
-OSCCONbits.IRCF1=1;
-OSCCONbits.IRCF2=1;
-OSCCONbits.SCS0=0;
-OSCCONbits.SCS1=0;
+# 143
+void main() {
+OSCTUNEbits.INTSRC = 1;
+OSCTUNEbits.PLLEN = 0;
+OSCCONbits.IRCF0 = 1;
+OSCCONbits.IRCF1 = 1;
+OSCCONbits.IRCF2 = 1;
+OSCCONbits.SCS0 = 0;
+OSCCONbits.SCS1 = 0;
 
-RTCCFGbits.RTCEN=1;
-RTCCFGbits.RTCWREN=1;
-T1CONbits.T1OSCEN=1;
+RTCCFGbits.RTCEN = 1;
+RTCCFGbits.RTCWREN = 1;
+T1CONbits.T1OSCEN = 1;
 
 TRISA = 0b11111101;
 TRISB = 0;
@@ -10170,51 +10172,52 @@ Lcd_Cmd(1);
 Lcd_Cmd(12);
 
 
-_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
+_delay((unsigned long)((98)*(8000000/4000.0)));
 Lcd_Cmd(1);
 
-while(1){
+
+while (1) {
 
 
 
 V_Principal();
-if(Sw_Left = PORTAbits.RA0 == 0){
+control_leds_iluminacion();
+control_leds_riego();
+if (Sw_Left = PORTAbits.RA0 == 0) {
 
 V_ProgReloj();
 }
 
-if(Sw_Down = PORTCbits.RC4 == 0){
-sprintf(buffer1,"%03u",lectura);
-Lcd_Out(4,0,buffer1);
+if (Sw_Down = PORTCbits.RC4 == 0) {
+sprintf(buffer1, "%03u", lectura);
+Lcd_Out(4, 0, buffer1);
 }
 
-if(Sw_Right = PORTAbits.RA2 == 0){
+if (Sw_Right = PORTAbits.RA2 == 0) {
 Lcd_Out(3, 0, "RIGHT             ");
 }
 
-if(Sw_Up = PORTAbits.RA3 == 0){
+if (Sw_Up = PORTAbits.RA3 == 0) {
 V_ProgRiegoIlum();
 }
 
-if(Sw_Center = PORTAbits.RA5 == 0){
+if (Sw_Center = PORTAbits.RA5 == 0) {
 Lcd_Cmd(1);
 Lcd_Out(2, 0, "CENTER             ");
 }
 
-LATBbits.LATB7 = 1;
-LATBbits.LATB6 = 1;
-LATAbits.LA1 = 1;
-_delay((unsigned long)((10)*(8000000/4000.0)));
-LATBbits.LATB7 = 0;
-LATBbits.LATB6 = 0;
-LATAbits.LA1 = 0;
-_delay((unsigned long)((10)*(8000000/4000.0)));
+}
 }
 
-}
-
-# 213
-void V_Principal(void){
+# 217
+void V_Principal(void) {
 Read_RTC();
 lee_temperatura();
 Lcd_Out(1, 0, "                    ");
@@ -10222,16 +10225,16 @@ char* cte = Convert_diasem(diasem);
 
 Lcd_Out(2, 0, cte);
 
-sprintf(buffer1,"%02u/%02u/%02u             ",dia,mes,anio);
-Lcd_Out(3,0,buffer1);
-sprintf(buffer1,"%02u:%02u:%02u             ",hora,minuto,segundo);
-Lcd_Out(4,0,buffer1);
+sprintf(buffer1, "%02u/%02u/%02u             ", dia, mes, anio);
+Lcd_Out(3, 0, buffer1);
+sprintf(buffer1, "%02u:%02u:%02u             ", hora, minuto, segundo);
+Lcd_Out(4, 0, buffer1);
 
 
 }
 
-# 233
-void V_ProgReloj(void){
+# 236
+void V_ProgReloj(void) {
 Lcd_Out(1, 0, "Program del reloj");
 
 char diasem_tr = diasem;
@@ -10242,92 +10245,120 @@ char hora_tr = hora;
 char minuto_tr = minuto;
 int posicion = 0;
 Lcd_Cmd(14);
-Lcd_Out(2, 0, "" );
+Lcd_Out(2, 0, "");
 
-for(i=0 ;i<30;i++){
+for (i = 0; i < 30; i++) {
 _delay((unsigned long)((90)*(8000000/4000.0)));
 
-if(Sw_Up = PORTAbits.RA3 == 0){
-i=0;
-if(posicion == 0){
-if(diasem_tr<6){diasem_tr++;}
-Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
-Lcd_Out(2, 0, "" );
-}else if(posicion == 2){
-if(dia_tr<31){dia_tr++;}
-sprintf(buffer1,"%02u",dia_tr);
+if (Sw_Up = PORTAbits.RA3 == 0) {
+i = 0;
+if (posicion == 0) {
+if (diasem_tr < 6) {
+diasem_tr++;
+}
+Lcd_Out(2, 0, Convert_diasem(diasem_tr));
+Lcd_Out(2, 0, "");
+} else if (posicion == 2) {
+if (dia_tr < 31) {
+dia_tr++;
+}
+sprintf(buffer1, "%02u", dia_tr);
 Lcd_Out(3, 0, buffer1);
-Lcd_Out(3, 0, "" );
-}else if(posicion == 4){
-if(mes_tr<12){mes_tr++;}
-sprintf(buffer1,"%02u",mes_tr);
+Lcd_Out(3, 0, "");
+} else if (posicion == 4) {
+if (mes_tr < 12) {
+mes_tr++;
+}
+sprintf(buffer1, "%02u", mes_tr);
 Lcd_Out(3, 3, buffer1);
-Lcd_Out(3, 3, "" );
-}else if(posicion == 6){
-if(anio_tr<99){anio_tr++;}
-sprintf(buffer1,"%02u",anio_tr);
+Lcd_Out(3, 3, "");
+} else if (posicion == 6) {
+if (anio_tr < 99) {
+anio_tr++;
+}
+sprintf(buffer1, "%02u", anio_tr);
 Lcd_Out(3, 6, buffer1);
-Lcd_Out(3, 6, "" );
-}else if(posicion == 8){
-if(hora_tr<23){hora_tr++;}
-sprintf(buffer1,"%02u",hora_tr);
+Lcd_Out(3, 6, "");
+} else if (posicion == 8) {
+if (hora_tr < 23) {
+hora_tr++;
+}
+sprintf(buffer1, "%02u", hora_tr);
 Lcd_Out(4, 0, buffer1);
-Lcd_Out(4, 0, "" );
-}else if(posicion == 10){
-if(minuto_tr<59){minuto_tr++;}
-sprintf(buffer1,"%02u",minuto_tr);
+Lcd_Out(4, 0, "");
+} else if (posicion == 10) {
+if (minuto_tr < 59) {
+minuto_tr++;
+}
+sprintf(buffer1, "%02u", minuto_tr);
 Lcd_Out(4, 3, buffer1);
-Lcd_Out(4, 3, "" );
+Lcd_Out(4, 3, "");
 }
 }
 
-if(Sw_Right = PORTAbits.RA2 == 0){
-if(posicion<=9){posicion+=2;}
-i=0;
-Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion+1], "" );
+if (Sw_Right = PORTAbits.RA2 == 0) {
+if (posicion <= 9) {
+posicion += 2;
+}
+i = 0;
+Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion + 1], "");
 }
 
-if(Sw_Left = PORTAbits.RA0 == 0){
-if(posicion>=2){posicion-=2;}
-i=0;
-Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion+1], "" );
+if (Sw_Left = PORTAbits.RA0 == 0) {
+if (posicion >= 2) {
+posicion -= 2;
+}
+i = 0;
+Lcd_Out(posicionesLeft[posicion], posicionesLeft[posicion + 1], "");
 }
 
-if(Sw_Down = PORTCbits.RC4 == 0){
-i=0;
-if(posicion == 0){
-if(diasem_tr>0){diasem_tr--;}
-Lcd_Out(2, 0, Convert_diasem(diasem_tr) );
-Lcd_Out(2, 0, "" );
-}else if(posicion == 2){
-if(dia_tr>1){dia_tr--;}
-sprintf(buffer1,"%02u",dia_tr);
+if (Sw_Down = PORTCbits.RC4 == 0) {
+i = 0;
+if (posicion == 0) {
+if (diasem_tr > 0) {
+diasem_tr--;
+}
+Lcd_Out(2, 0, Convert_diasem(diasem_tr));
+Lcd_Out(2, 0, "");
+} else if (posicion == 2) {
+if (dia_tr > 1) {
+dia_tr--;
+}
+sprintf(buffer1, "%02u", dia_tr);
 Lcd_Out(3, 0, buffer1);
-Lcd_Out(3, 0, "" );
-}else if(posicion == 4){
-if(mes_tr>1){mes_tr--;}
-sprintf(buffer1,"%02u",mes_tr);
+Lcd_Out(3, 0, "");
+} else if (posicion == 4) {
+if (mes_tr > 1) {
+mes_tr--;
+}
+sprintf(buffer1, "%02u", mes_tr);
 Lcd_Out(3, 3, buffer1);
-Lcd_Out(3, 3, "" );
-}else if(posicion == 6){
-if(anio_tr>20){anio_tr--;}
-sprintf(buffer1,"%02u",anio_tr);
+Lcd_Out(3, 3, "");
+} else if (posicion == 6) {
+if (anio_tr > 20) {
+anio_tr--;
+}
+sprintf(buffer1, "%02u", anio_tr);
 Lcd_Out(3, 6, buffer1);
-Lcd_Out(3, 6, "" );
-}else if(posicion == 8){
-if(hora_tr>0){hora_tr--;}
-sprintf(buffer1,"%02u",hora_tr);
+Lcd_Out(3, 6, "");
+} else if (posicion == 8) {
+if (hora_tr > 0) {
+hora_tr--;
+}
+sprintf(buffer1, "%02u", hora_tr);
 Lcd_Out(4, 0, buffer1);
-Lcd_Out(4, 0, "" );
-}else if(posicion == 10){
-if(minuto_tr>0){minuto_tr--;}
-sprintf(buffer1,"%02u",minuto_tr);
+Lcd_Out(4, 0, "");
+} else if (posicion == 10) {
+if (minuto_tr > 0) {
+minuto_tr--;
+}
+sprintf(buffer1, "%02u", minuto_tr);
 Lcd_Out(4, 3, buffer1);
-Lcd_Out(4, 3, "" );
+Lcd_Out(4, 3, "");
 }
 }
 
-if(Sw_Center = PORTAbits.RA5 == 0){
+if (Sw_Center = PORTAbits.RA5 == 0) {
 diasem = diasem_tr;
 dia = dia_tr;
 mes = mes_tr;
@@ -10344,147 +10375,183 @@ Lcd_Cmd(12);
 
 }
 
-# 350
-void V_ProgRiegoIlum(void){
+# 381
+void V_ProgRiegoIlum(void) {
 
 Lcd_Out(1, 0, "Riego");
-sprintf(buffer1,"Inic %02u:%02u",inicio_hora_riego,inicio_min_riego);
-Lcd_Out(2,0,buffer1);
-sprintf(buffer1,"Fin %02u:%02u",fin_hora_riego,fin_min_riego);
-Lcd_Out(2,11,buffer1);
+sprintf(buffer1, "Inic %02u:%02u", inicio_hora_riego, inicio_min_riego);
+Lcd_Out(2, 0, buffer1);
+sprintf(buffer1, "Fin %02u:%02u", fin_hora_riego, fin_min_riego);
+Lcd_Out(2, 11, buffer1);
 Lcd_Out(3, 0, "Iluminacion");
-sprintf(buffer1,"Inic %02u:%02u",inicio_hora_ilum,inicio_min_ilum);
-Lcd_Out(4,0,buffer1);
-sprintf(buffer1,"Fin %02u:%02u",fin_hora_ilum,fin_min_ilum);
-Lcd_Out(4,11,buffer1);
+sprintf(buffer1, "Inic %02u:%02u", inicio_hora_ilum, inicio_min_ilum);
+Lcd_Out(4, 0, buffer1);
+sprintf(buffer1, "Fin %02u:%02u", fin_hora_ilum, fin_min_ilum);
+Lcd_Out(4, 11, buffer1);
 
 char i_hora_ilum_tr = inicio_hora_ilum;
 char i_min_ilum_tr = inicio_min_ilum;
-char f_hora_ilum_tr = fin_hora_ilum;
-char f_min_ilum_tr = fin_min_ilum;
+char d_hora_ilum_tr = fin_hora_ilum;
+char d_min_ilum_tr = fin_min_ilum;
 char i_hora_riego_tr = inicio_hora_riego;
 char i_min_riego_tr = inicio_min_riego;
-char f_hora_riego_tr = fin_hora_riego;
-char f_min_riego_tr = fin_min_riego;
+char d_hora_riego_tr = fin_hora_riego;
+char d_min_riego_tr = fin_min_riego;
 int posicion = 0;
 Lcd_Cmd(14);
-Lcd_Out(2, 5, "" );
+Lcd_Out(2, 5, "");
 
-for(i=0 ;i<30;i++){
+for (i = 0; i < 30; i++) {
 _delay((unsigned long)((90)*(8000000/4000.0)));
 
-if(Sw_Up = PORTAbits.RA3 == 0){
-i=0;
-if(posicion == 0){
-if(i_hora_riego_tr<23){i_hora_riego_tr++;}
-sprintf(buffer1,"%02u",i_hora_riego_tr);
+if (Sw_Up = PORTAbits.RA3 == 0) {
+i = 0;
+if (posicion == 0) {
+if (i_hora_riego_tr < 23) {
+i_hora_riego_tr++;
+}
+sprintf(buffer1, "%02u", i_hora_riego_tr);
 Lcd_Out(2, 5, buffer1);
-Lcd_Out(2, 5, "" );
-}else if(posicion == 2){
-if(i_min_riego_tr<59){i_min_riego_tr++;}
-sprintf(buffer1,"%02u",i_min_riego_tr);
+Lcd_Out(2, 5, "");
+} else if (posicion == 2) {
+if (i_min_riego_tr < 59) {
+i_min_riego_tr++;
+}
+sprintf(buffer1, "%02u", i_min_riego_tr);
 Lcd_Out(2, 8, buffer1);
-Lcd_Out(2, 8, "" );
-}else if(posicion == 4){
-if(f_hora_riego_tr<23){f_hora_riego_tr++;}
-sprintf(buffer1,"%02u",f_hora_riego_tr);
+Lcd_Out(2, 8, "");
+} else if (posicion == 4) {
+if (d_hora_riego_tr < 3) {
+d_hora_riego_tr++;
+}
+sprintf(buffer1, "%02u", d_hora_riego_tr);
 Lcd_Out(2, 15, buffer1);
-Lcd_Out(2, 15, "" );
-}else if(posicion == 6){
-if(f_min_riego_tr<59){f_min_riego_tr++;}
-sprintf(buffer1,"%02u",f_min_riego_tr);
+Lcd_Out(2, 15, "");
+} else if (posicion == 6) {
+if (d_min_riego_tr < 59) {
+d_min_riego_tr++;
+}
+sprintf(buffer1, "%02u", d_min_riego_tr);
 Lcd_Out(2, 18, buffer1);
-Lcd_Out(2, 18, "" );
-}else if(posicion == 8){
-if(i_hora_ilum_tr<23){i_hora_ilum_tr++;}
-sprintf(buffer1,"%02u",i_hora_ilum_tr);
+Lcd_Out(2, 18, "");
+} else if (posicion == 8) {
+if (i_hora_ilum_tr < 23) {
+i_hora_ilum_tr++;
+}
+sprintf(buffer1, "%02u", i_hora_ilum_tr);
 Lcd_Out(4, 5, buffer1);
-Lcd_Out(4, 5, "" );
-}else if(posicion == 10){
-if(i_min_ilum_tr<59){i_min_ilum_tr++;}
-sprintf(buffer1,"%02u",i_min_ilum_tr);
+Lcd_Out(4, 5, "");
+} else if (posicion == 10) {
+if (i_min_ilum_tr < 59) {
+i_min_ilum_tr++;
+}
+sprintf(buffer1, "%02u", i_min_ilum_tr);
 Lcd_Out(4, 8, buffer1);
-Lcd_Out(4, 8, "" );
-}else if(posicion == 12){
-if(f_hora_ilum_tr<23){f_hora_ilum_tr++;}
-sprintf(buffer1,"%02u",f_hora_ilum_tr);
+Lcd_Out(4, 8, "");
+} else if (posicion == 12) {
+if (d_hora_ilum_tr < 11) {
+d_hora_ilum_tr++;
+}
+sprintf(buffer1, "%02u", d_hora_ilum_tr);
 Lcd_Out(4, 15, buffer1);
-Lcd_Out(4, 15, "" );
-}else if(posicion == 14){
-if(f_min_ilum_tr<59){f_min_ilum_tr++;}
-sprintf(buffer1,"%02u",f_min_ilum_tr);
+Lcd_Out(4, 15, "");
+} else if (posicion == 14) {
+if (d_min_ilum_tr < 59) {
+d_min_ilum_tr++;
+}
+sprintf(buffer1, "%02u", d_min_ilum_tr);
 Lcd_Out(4, 18, buffer1);
-Lcd_Out(4, 18, "" );
+Lcd_Out(4, 18, "");
 }
 }
 
-if(Sw_Right = PORTAbits.RA2 == 0){
-if(posicion<=13){posicion+=2;}
-i=0;
-Lcd_Out(posicionesUp[posicion], posicionesUp[posicion+1], "" );
+if (Sw_Right = PORTAbits.RA2 == 0) {
+if (posicion <= 13) {
+posicion += 2;
+}
+i = 0;
+Lcd_Out(posicionesUp[posicion], posicionesUp[posicion + 1], "");
 }
 
-if(Sw_Left = PORTAbits.RA0 == 0){
-if(posicion>=2){posicion-=2;}
-i=0;
-Lcd_Out(posicionesUp[posicion], posicionesUp[posicion+1], "" );
+if (Sw_Left = PORTAbits.RA0 == 0) {
+if (posicion >= 2) {
+posicion -= 2;
+}
+i = 0;
+Lcd_Out(posicionesUp[posicion], posicionesUp[posicion + 1], "");
 }
 
-if(Sw_Down = PORTCbits.RC4 == 0){
-i=0;
-if(posicion == 0){
-if(i_hora_riego_tr>0){i_hora_riego_tr--;}
-sprintf(buffer1,"%02u",i_hora_riego_tr);
+if (Sw_Down = PORTCbits.RC4 == 0) {
+i = 0;
+if (posicion == 0) {
+if (i_hora_riego_tr > 0) {
+i_hora_riego_tr--;
+}
+sprintf(buffer1, "%02u", i_hora_riego_tr);
 Lcd_Out(2, 5, buffer1);
-Lcd_Out(2, 5, "" );
-}else if(posicion == 2){
-if(i_min_riego_tr>0){i_min_riego_tr--;}
-sprintf(buffer1,"%02u",i_min_riego_tr);
+Lcd_Out(2, 5, "");
+} else if (posicion == 2) {
+if (i_min_riego_tr > 0) {
+i_min_riego_tr--;
+}
+sprintf(buffer1, "%02u", i_min_riego_tr);
 Lcd_Out(2, 8, buffer1);
-Lcd_Out(2, 8, "" );
-}else if(posicion == 4){
-if(f_hora_riego_tr>0){f_hora_riego_tr--;}
-sprintf(buffer1,"%02u",f_hora_riego_tr);
+Lcd_Out(2, 8, "");
+} else if (posicion == 4) {
+if (d_hora_riego_tr > 0) {
+d_hora_riego_tr--;
+}
+sprintf(buffer1, "%02u", d_hora_riego_tr);
 Lcd_Out(2, 15, buffer1);
-Lcd_Out(2, 15, "" );
-}else if(posicion == 6){
-if(f_min_riego_tr>0){f_min_riego_tr--;}
-sprintf(buffer1,"%02u",f_min_riego_tr);
+Lcd_Out(2, 15, "");
+} else if (posicion == 6) {
+if (d_min_riego_tr > 0) {
+d_min_riego_tr--;
+}
+sprintf(buffer1, "%02u", d_min_riego_tr);
 Lcd_Out(2, 18, buffer1);
-Lcd_Out(2, 18, "" );
-}else if(posicion == 8){
-if(i_hora_ilum_tr>0){i_hora_ilum_tr--;}
-sprintf(buffer1,"%02u",i_hora_ilum_tr);
+Lcd_Out(2, 18, "");
+} else if (posicion == 8) {
+if (i_hora_ilum_tr > 0) {
+i_hora_ilum_tr--;
+}
+sprintf(buffer1, "%02u", i_hora_ilum_tr);
 Lcd_Out(4, 5, buffer1);
-Lcd_Out(4, 5, "" );
-}else if(posicion == 10){
-if(i_min_ilum_tr>0){i_min_ilum_tr--;}
-sprintf(buffer1,"%02u",i_min_ilum_tr);
+Lcd_Out(4, 5, "");
+} else if (posicion == 10) {
+if (i_min_ilum_tr > 0) {
+i_min_ilum_tr--;
+}
+sprintf(buffer1, "%02u", i_min_ilum_tr);
 Lcd_Out(4, 8, buffer1);
-Lcd_Out(4, 8, "" );
-}else if(posicion == 12){
-if(f_hora_ilum_tr>0){f_hora_ilum_tr--;}
-sprintf(buffer1,"%02u",f_hora_ilum_tr);
+Lcd_Out(4, 8, "");
+} else if (posicion == 12) {
+if (d_hora_ilum_tr > 0) {
+d_hora_ilum_tr--;
+}
+sprintf(buffer1, "%02u", d_hora_ilum_tr);
 Lcd_Out(4, 15, buffer1);
-Lcd_Out(4, 15, "" );
-}else if(posicion == 14){
-if(f_min_ilum_tr>0){f_min_ilum_tr--;}
-sprintf(buffer1,"%02u",f_min_ilum_tr);
+Lcd_Out(4, 15, "");
+} else if (posicion == 14) {
+if (d_min_ilum_tr > 0) {
+d_min_ilum_tr--;
+}
+sprintf(buffer1, "%02u", d_min_ilum_tr);
 Lcd_Out(4, 18, buffer1);
-Lcd_Out(4, 18, "" );
+Lcd_Out(4, 18, "");
 }
 }
 
 
-if(Sw_Center = PORTAbits.RA5 == 0){
+if (Sw_Center = PORTAbits.RA5 == 0) {
 inicio_hora_ilum = i_hora_ilum_tr;
 inicio_min_ilum = i_min_ilum_tr;
-fin_hora_ilum = f_hora_ilum_tr;
-fin_min_ilum = f_min_ilum_tr;
+fin_hora_ilum = d_hora_ilum_tr;
+fin_min_ilum = d_min_ilum_tr;
 inicio_hora_riego = i_hora_riego_tr;
 inicio_min_riego = i_min_riego_tr;
-fin_hora_riego = f_hora_riego_tr;
-fin_min_riego = f_min_riego_tr;
+fin_hora_riego = d_hora_riego_tr;
+fin_min_riego = d_min_riego_tr;
 Write_RTC();
 break;
 }
@@ -10492,110 +10559,141 @@ break;
 Lcd_Cmd(12);
 }
 
-# 503
-void Write_RTC(void)
-{
+# 570
+void Write_RTC(void) {
 RtccWrOn();
 
-PIE3bits.RTCCIE=1;
-segundo_d=segundo/10;
-segundo_u=segundo-segundo_d*10;
-RtccTime.f.sec =segundo_d*16+segundo_u;
-minuto_d=minuto/10;
-minuto_u=minuto-minuto_d*10;
-RtccTime.f.min =minuto_d*16+minuto_u;
-hora_d=hora/10;
-hora_u=hora-hora_d*10;
-RtccTime.f.hour=hora_d*16+hora_u;
-anio_d=anio/10;
-anio_u=anio-anio_d*10;
-RtccDate.f.year=anio_d*16+anio_u;
-mes_d=mes/10;
-mes_u=mes-mes_d*10;
-RtccDate.f.mon=mes_d*16+mes_u;
-fecha_d=dia/10;
-fecha_u=dia-fecha_d*10;
-RtccDate.f.mday=fecha_d*16+fecha_u;
-dia_semana=diasem;
-RtccDate.f.wday =diasem;
+PIE3bits.RTCCIE = 1;
+segundo_d = segundo / 10;
+segundo_u = segundo - segundo_d * 10;
+RtccTime.f.sec = segundo_d * 16 + segundo_u;
+minuto_d = minuto / 10;
+minuto_u = minuto - minuto_d * 10;
+RtccTime.f.min = minuto_d * 16 + minuto_u;
+hora_d = hora / 10;
+hora_u = hora - hora_d * 10;
+RtccTime.f.hour = hora_d * 16 + hora_u;
+anio_d = anio / 10;
+anio_u = anio - anio_d * 10;
+RtccDate.f.year = anio_d * 16 + anio_u;
+mes_d = mes / 10;
+mes_u = mes - mes_d * 10;
+RtccDate.f.mon = mes_d * 16 + mes_u;
+fecha_d = dia / 10;
+fecha_u = dia - fecha_d * 10;
+RtccDate.f.mday = fecha_d * 16 + fecha_u;
+dia_semana = diasem;
+RtccDate.f.wday = diasem;
 
-RtccWriteTime(&RtccTime,1);
-RtccWriteDate(&RtccDate,1);
+RtccWriteTime(&RtccTime, 1);
+RtccWriteDate(&RtccDate, 1);
 (RTCCFGbits.RTCEN=1);
 }
 
-# 541
+# 607
 void Read_RTC(void)
 
 {
 RtccReadTime(&RtccTime);
-segundo_u=(RtccTime.f.sec & 0x0F);
-segundo_d=((RtccTime.f.sec & 0xF0)>>4);
-minuto_u=(RtccTime.f.min & 0x0F);
-minuto_d=((RtccTime.f.min & 0xF0)>>4);
-hora_u=(RtccTime.f.hour & 0x0F);
-hora_d=((RtccTime.f.hour & 0xF0)>>4);
+segundo_u = (RtccTime.f.sec & 0x0F);
+segundo_d = ((RtccTime.f.sec & 0xF0) >> 4);
+minuto_u = (RtccTime.f.min & 0x0F);
+minuto_d = ((RtccTime.f.min & 0xF0) >> 4);
+hora_u = (RtccTime.f.hour & 0x0F);
+hora_d = ((RtccTime.f.hour & 0xF0) >> 4);
 RtccReadDate(&RtccDate);
-fecha_u=(RtccDate.f.mday & 0x0F);
-fecha_d=((RtccDate.f.mday & 0xF0)>>4);
-mes_u=(RtccDate.f.mon & 0x0F);
-mes_d=((RtccDate.f.mon & 0xF0)>>4);
-dia_semana=RtccDate.f.wday;
-anio_u=(RtccDate.f.year & 0x0F);
-anio_d=((RtccDate.f.year & 0xF0)>>4);
-segundo=segundo_d*10+segundo_u;
-minuto=minuto_d*10+minuto_u;
-hora=hora_d*10+hora_u;
-dia=fecha_d*10+fecha_u;
-diasem=dia_semana;
-mes=mes_d*10+mes_u;
-anio=anio_d*10+anio_u;
+fecha_u = (RtccDate.f.mday & 0x0F);
+fecha_d = ((RtccDate.f.mday & 0xF0) >> 4);
+mes_u = (RtccDate.f.mon & 0x0F);
+mes_d = ((RtccDate.f.mon & 0xF0) >> 4);
+dia_semana = RtccDate.f.wday;
+anio_u = (RtccDate.f.year & 0x0F);
+anio_d = ((RtccDate.f.year & 0xF0) >> 4);
+segundo = segundo_d * 10 + segundo_u;
+minuto = minuto_d * 10 + minuto_u;
+hora = hora_d * 10 + hora_u;
+dia = fecha_d * 10 + fecha_u;
+diasem = dia_semana;
+mes = mes_d * 10 + mes_u;
+anio = anio_d * 10 + anio_u;
 }
 
-# 574
-void lee_temperatura(void){
+# 640
+void lee_temperatura(void) {
 
 ADCON0bits.ADON = 1;
 ADCON0bits.GO = 1;
-while(ADCON0bits.GO);
+while (ADCON0bits.GO);
 _delay((unsigned long)((1)*(8000000/4000.0)));
 lectura = ADRESH;
 ADCON0bits.ADON = 0;
 }
 
-char* Convert_diasem(int dia){
+char* Convert_diasem(int dia) {
 
 unsigned char buffer_dia[20];
 
-switch(dia){
-case 0: {
-sprintf(buffer_dia,"%s", "Domingo             ");
+switch (dia) {
+case 0:
+{
+sprintf(buffer_dia, "%s", "Domingo             ");
 break;
 }
-case 1: {
-sprintf(buffer_dia,"%s", "Lunes               ");
+case 1:
+{
+sprintf(buffer_dia, "%s", "Lunes               ");
 break;
 }
-case 2: {
-sprintf(buffer_dia,"%s", "Martes              ");
+case 2:
+{
+sprintf(buffer_dia, "%s", "Martes              ");
 break;
 }
-case 3: {
-sprintf(buffer_dia,"%s", "Miercoles           ");
+case 3:
+{
+sprintf(buffer_dia, "%s", "Miercoles           ");
 break;
 }
-case 4: {
-sprintf(buffer_dia,"%s", "Jueves              ");
+case 4:
+{
+sprintf(buffer_dia, "%s", "Jueves              ");
 break;
 }
-case 5: {
-sprintf(buffer_dia,"%s", "Viernes             ");
+case 5:
+{
+sprintf(buffer_dia, "%s", "Viernes             ");
 break;
 }
-case 6: {
-sprintf(buffer_dia,"%s", "Sabado              ");
+case 6:
+{
+sprintf(buffer_dia, "%s", "Sabado              ");
 break;
 }
 }
 return buffer_dia;
+}
+
+void control_leds_iluminacion() {
+
+if(inicio_hora_ilum == hora && inicio_min_ilum == minuto){
+LATBbits.LATB7 = 1;
+}
+
+if(fin_hora_ilum == hora && fin_min_ilum == minuto){
+LATBbits.LATB7 = 0;
+}
+}
+
+void control_leds_riego(){
+
+if(inicio_hora_riego == hora && inicio_min_riego == minuto){
+if(Humedad = PORTCbits.RC7 == 0){
+LATBbits.LATB6 = 1;
+}
+
+}
+
+if(fin_hora_riego == hora && fin_min_riego == minuto){
+LATBbits.LATB6 = 0;
+}
 }
