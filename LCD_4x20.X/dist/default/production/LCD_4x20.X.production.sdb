@@ -3,7 +3,7 @@
 [d edition pro ]
 [d chip 18F26J50 ]
 [d frameptr 4065 ]
-"280 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"529 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [e E7337 _BOOL `uc
 FALSE 0
 TRUE 1
@@ -94,20 +94,22 @@ RTCCPTR_MASK_YEAR 3
 [v _Lcd_Chr_CP Lcd_Chr_CP `(v  1 e 0 0 ]
 "140
 [v _Lcd_Cmd Lcd_Cmd `(v  1 e 0 0 ]
-"130 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"139 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _main main `(v  1 e 0 0 ]
-"221
+"213
 [v _V_Principal V_Principal `(v  1 e 0 0 ]
-"254
+"233
+[v _V_ProgReloj V_ProgReloj `(v  1 e 0 0 ]
+"350
+[v _V_ProgRiegoIlum V_ProgRiegoIlum `(v  1 e 0 0 ]
+"503
 [v _Write_RTC Write_RTC `(v  1 e 0 0 ]
-"292
+"541
 [v _Read_RTC Read_RTC `(v  1 e 0 0 ]
-"325
+"574
 [v _lee_temperatura lee_temperatura `(v  1 e 0 0 ]
-"335
+"584
 [v _Convert_diasem Convert_diasem `(*.39uc  1 e 2 0 ]
-"372
-[v _ManejaMovimientos ManejaMovimientos `(v  1 e 0 0 ]
 "8 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 "492 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\doprnt.c
@@ -204,20 +206,38 @@ RTCCPTR_MASK_YEAR 3
 [v _RtccDate RtccDate `S162  1 e 4 0 ]
 "70
 [v _posicionesLeft posicionesLeft `[12]i  1 e 24 0 ]
-"72
-[v _Sw_Up Sw_Up `uc  1 e 1 0 ]
+"71
+[v _posicionesUp posicionesUp `[16]i  1 e 32 0 ]
 "73
-[v _Sw_Down Sw_Down `uc  1 e 1 0 ]
+[v _Sw_Up Sw_Up `uc  1 e 1 0 ]
 "74
-[v _Sw_Left Sw_Left `uc  1 e 1 0 ]
+[v _Sw_Down Sw_Down `uc  1 e 1 0 ]
 "75
-[v _Sw_Right Sw_Right `uc  1 e 1 0 ]
+[v _Sw_Left Sw_Left `uc  1 e 1 0 ]
 "76
+[v _Sw_Right Sw_Right `uc  1 e 1 0 ]
+"77
 [v _Sw_Center Sw_Center `uc  1 e 1 0 ]
-"78
+"79
 [v _i i `i  1 e 2 0 ]
-"80
+"81
 [v _lectura lectura `uc  1 e 1 0 ]
+"84
+[v _inicio_hora_ilum inicio_hora_ilum `uc  1 e 1 0 ]
+"85
+[v _inicio_min_ilum inicio_min_ilum `uc  1 e 1 0 ]
+"86
+[v _fin_hora_ilum fin_hora_ilum `uc  1 e 1 0 ]
+"87
+[v _fin_min_ilum fin_min_ilum `uc  1 e 1 0 ]
+"88
+[v _inicio_hora_riego inicio_hora_riego `uc  1 e 1 0 ]
+"89
+[v _inicio_min_riego inicio_min_riego `uc  1 e 1 0 ]
+"90
+[v _fin_hora_riego fin_hora_riego `uc  1 e 1 0 ]
+"91
+[v _fin_min_riego fin_min_riego `uc  1 e 1 0 ]
 "2403 C:\Program Files (x86)\Microchip\xc8\v1.34\include\pic18f26j50.h
 [v _RTCCFG RTCCFG `VEuc  1 e 1 @3903 ]
 [s S223 . 1 `uc 1 RTCPTR0 1 0 :1:0 
@@ -353,7 +373,7 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S507 . 1 `S453 1 . 1 0 `S462 1 . 1 0 `S469 1 . 1 0 `S472 1 . 1 0 `S481 1 . 1 0 `S488 1 . 1 0 `S492 1 . 1 0 `S495 1 . 1 0 `S498 1 . 1 0 `S501 1 . 1 0 `S504 1 . 1 0 ]
 [v _PORTCbits PORTCbits `VES507  1 e 1 @3970 ]
-[s S580 . 1 `uc 1 LATA0 1 0 :1:0 
+[s S584 . 1 `uc 1 LATA0 1 0 :1:0 
 `uc 1 LATA1 1 0 :1:1 
 `uc 1 LATA2 1 0 :1:2 
 `uc 1 LATA3 1 0 :1:3 
@@ -363,31 +383,31 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 LATA7 1 0 :1:7 
 ]
 "6274
-[s S589 . 1 `uc 1 LA0 1 0 :1:0 
+[s S593 . 1 `uc 1 LA0 1 0 :1:0 
 ]
-[s S591 . 1 `uc 1 . 1 0 :1:0 
+[s S595 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 LA1 1 0 :1:1 
 ]
-[s S594 . 1 `uc 1 . 1 0 :2:0 
+[s S598 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 LA2 1 0 :1:2 
 ]
-[s S597 . 1 `uc 1 . 1 0 :3:0 
+[s S601 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 LA3 1 0 :1:3 
 ]
-[s S600 . 1 `uc 1 . 1 0 :4:0 
+[s S604 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 LA4 1 0 :1:4 
 ]
-[s S603 . 1 `uc 1 . 1 0 :5:0 
+[s S607 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 LA5 1 0 :1:5 
 ]
-[s S606 . 1 `uc 1 . 1 0 :6:0 
+[s S610 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 LA6 1 0 :1:6 
 ]
-[s S609 . 1 `uc 1 . 1 0 :7:0 
+[s S613 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 LA7 1 0 :1:7 
 ]
-[u S612 . 1 `S580 1 . 1 0 `S589 1 . 1 0 `S591 1 . 1 0 `S594 1 . 1 0 `S597 1 . 1 0 `S600 1 . 1 0 `S603 1 . 1 0 `S606 1 . 1 0 `S609 1 . 1 0 ]
-[v _LATAbits LATAbits `VES612  1 e 1 @3977 ]
+[u S616 . 1 `S584 1 . 1 0 `S593 1 . 1 0 `S595 1 . 1 0 `S598 1 . 1 0 `S601 1 . 1 0 `S604 1 . 1 0 `S607 1 . 1 0 `S610 1 . 1 0 `S613 1 . 1 0 ]
+[v _LATAbits LATAbits `VES616  1 e 1 @3977 ]
 [s S42 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
@@ -423,21 +443,21 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S74 . 1 `S42 1 . 1 0 `S51 1 . 1 0 `S53 1 . 1 0 `S56 1 . 1 0 `S59 1 . 1 0 `S62 1 . 1 0 `S65 1 . 1 0 `S68 1 . 1 0 `S71 1 . 1 0 ]
 [v _LATBbits LATBbits `VES74  1 e 1 @3978 ]
-[s S1511 . 1 `uc 1 ALRMPTR 1 0 :2:0 
+[s S1573 . 1 `uc 1 ALRMPTR 1 0 :2:0 
 `uc 1 AMASK 1 0 :4:2 
 `uc 1 CHIME 1 0 :1:6 
 `uc 1 ALRMEN 1 0 :1:7 
 ]
 "6740
-[s S1516 . 1 `uc 1 ALRMPTR0 1 0 :1:0 
+[s S1578 . 1 `uc 1 ALRMPTR0 1 0 :1:0 
 `uc 1 ALRMPTR1 1 0 :1:1 
 `uc 1 AMASK0 1 0 :1:2 
 `uc 1 AMASK1 1 0 :1:3 
 `uc 1 AMASK2 1 0 :1:4 
 `uc 1 AMASK3 1 0 :1:5 
 ]
-[u S1523 . 1 `S1511 1 . 1 0 `S1516 1 . 1 0 ]
-[v _ALRMCFGbits ALRMCFGbits `VES1523  1 e 1 @3985 ]
+[u S1585 . 1 `S1573 1 . 1 0 `S1578 1 . 1 0 ]
+[v _ALRMCFGbits ALRMCFGbits `VES1585  1 e 1 @3985 ]
 "6794
 [v _TRISA TRISA `VEuc  1 e 1 @3986 ]
 "6850
@@ -474,7 +494,7 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S178 . 1 `S167 1 . 1 0 `S171 1 . 1 0 ]
 [v _OSCTUNEbits OSCTUNEbits `VES178  1 e 1 @3995 ]
-[s S672 . 1 `uc 1 RTCCIE 1 0 :1:0 
+[s S676 . 1 `uc 1 RTCCIE 1 0 :1:0 
 `uc 1 TMR3GIE 1 0 :1:1 
 `uc 1 CTMUIE 1 0 :1:2 
 `uc 1 TMR4IE 1 0 :1:3 
@@ -484,44 +504,44 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 SSP2IE 1 0 :1:7 
 ]
 "7958
-[s S681 . 1 `uc 1 RXB0IE 1 0 :1:0 
+[s S685 . 1 `uc 1 RXB0IE 1 0 :1:0 
 ]
-[s S683 . 1 `uc 1 . 1 0 :1:0 
+[s S687 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 RXB1IE 1 0 :1:1 
 ]
-[s S686 . 1 `uc 1 . 1 0 :1:0 
+[s S690 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 RXBNIE 1 0 :1:1 
 ]
-[s S689 . 1 `uc 1 . 1 0 :2:0 
+[s S693 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 TXB0IE 1 0 :1:2 
 ]
-[s S692 . 1 `uc 1 . 1 0 :3:0 
+[s S696 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 TXB1IE 1 0 :1:3 
 ]
-[s S695 . 1 `uc 1 . 1 0 :4:0 
+[s S699 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 TXB2IE 1 0 :1:4 
 ]
-[s S698 . 1 `uc 1 . 1 0 :4:0 
+[s S702 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 TXBNIE 1 0 :1:4 
 ]
-[u S701 . 1 `S672 1 . 1 0 `S681 1 . 1 0 `S683 1 . 1 0 `S686 1 . 1 0 `S689 1 . 1 0 `S692 1 . 1 0 `S695 1 . 1 0 `S698 1 . 1 0 ]
-[v _PIE3bits PIE3bits `VES701  1 e 1 @4003 ]
+[u S705 . 1 `S676 1 . 1 0 `S685 1 . 1 0 `S687 1 . 1 0 `S690 1 . 1 0 `S693 1 . 1 0 `S696 1 . 1 0 `S699 1 . 1 0 `S702 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES705  1 e 1 @4003 ]
 "8239
 [v _EECON2 EECON2 `VEuc  1 e 1 @4007 ]
 "10682
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
 "10784
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
-[s S765 . 1 `uc 1 . 1 0 :1:0 
+[s S769 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_NOT_DONE 1 0 :1:1 
 ]
 "10835
-[s S768 . 1 `uc 1 ADON 1 0 :1:0 
+[s S772 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 `uc 1 VCFG 1 0 :2:6 
 ]
-[s S773 . 1 `uc 1 . 1 0 :1:0 
+[s S777 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
@@ -530,26 +550,26 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 VCFG0 1 0 :1:6 
 `uc 1 VCFG1 1 0 :1:7 
 ]
-[s S782 . 1 `uc 1 . 1 0 :1:0 
+[s S786 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 DONE 1 0 :1:1 
 ]
-[s S785 . 1 `uc 1 . 1 0 :1:0 
+[s S789 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 ]
-[s S788 . 1 `uc 1 . 1 0 :1:0 
+[s S792 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 NOT_DONE 1 0 :1:1 
 ]
-[s S791 . 1 `uc 1 . 1 0 :1:0 
+[s S795 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S794 . 1 `uc 1 . 1 0 :7:0 
+[s S798 . 1 `uc 1 . 1 0 :7:0 
 `uc 1 ADCAL 1 0 :1:7 
 ]
-[s S797 . 1 `uc 1 . 1 0 :1:0 
+[s S801 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GODONE 1 0 :1:1 
 ]
-[u S800 . 1 `S765 1 . 1 0 `S768 1 . 1 0 `S773 1 . 1 0 `S782 1 . 1 0 `S785 1 . 1 0 `S788 1 . 1 0 `S791 1 . 1 0 `S794 1 . 1 0 `S797 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES800  1 e 1 @4034 ]
+[u S804 . 1 `S769 1 . 1 0 `S772 1 . 1 0 `S777 1 . 1 0 `S786 1 . 1 0 `S789 1 . 1 0 `S792 1 . 1 0 `S795 1 . 1 0 `S798 1 . 1 0 `S801 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES804  1 e 1 @4034 ]
 "10954
 [v _ADRESH ADRESH `VEuc  1 e 1 @4036 ]
 [s S244 . 1 `uc 1 TMR1ON 1 0 :1:0 
@@ -599,7 +619,7 @@ RTCCPTR_MASK_YEAR 3
 ]
 [u S206 . 1 `S193 1 . 1 0 `S199 1 . 1 0 ]
 [v _OSCCONbits OSCCONbits `VES206  1 e 1 @4051 ]
-[s S1318 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S1380 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INT0IF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -609,7 +629,7 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 GIE_GIEH 1 0 :1:7 
 ]
 "14949
-[s S1327 . 1 `uc 1 . 1 0 :1:0 
+[s S1389 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 INT0F 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -618,35 +638,180 @@ RTCCPTR_MASK_YEAR 3
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
-[s S1336 . 1 `uc 1 . 1 0 :6:0 
+[s S1398 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 GIEL 1 0 :1:6 
 `uc 1 GIEH 1 0 :1:7 
 ]
-[u S1353 . 1 `S1318 1 . 1 0 `S1327 1 . 1 0 `S1336 1 . 1 0 `S1327 1 . 1 0 `S1336 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES1353  1 e 1 @4082 ]
+[u S1415 . 1 `S1380 1 . 1 0 `S1389 1 . 1 0 `S1398 1 . 1 0 `S1389 1 . 1 0 `S1398 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES1415  1 e 1 @4082 ]
 "354 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\doprnt.c
 [v _dpowers dpowers `C[5]ui  1 s 10 dpowers ]
-"130 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"139 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _main main `(v  1 e 0 0 ]
 {
-"216
+"208
 } 0
-"221
+"350
+[v _V_ProgRiegoIlum V_ProgRiegoIlum `(v  1 e 0 0 ]
+{
+"371
+[v V_ProgRiegoIlum@posicion posicion `i  1 a 2 78 ]
+"370
+[v V_ProgRiegoIlum@f_min_riego_tr f_min_riego_tr `uc  1 a 1 77 ]
+"369
+[v V_ProgRiegoIlum@f_hora_riego_tr f_hora_riego_tr `uc  1 a 1 76 ]
+"368
+[v V_ProgRiegoIlum@i_min_riego_tr i_min_riego_tr `uc  1 a 1 75 ]
+"367
+[v V_ProgRiegoIlum@i_hora_riego_tr i_hora_riego_tr `uc  1 a 1 74 ]
+"366
+[v V_ProgRiegoIlum@f_min_ilum_tr f_min_ilum_tr `uc  1 a 1 73 ]
+"365
+[v V_ProgRiegoIlum@f_hora_ilum_tr f_hora_ilum_tr `uc  1 a 1 72 ]
+"364
+[v V_ProgRiegoIlum@i_min_ilum_tr i_min_ilum_tr `uc  1 a 1 71 ]
+"363
+[v V_ProgRiegoIlum@i_hora_ilum_tr i_hora_ilum_tr `uc  1 a 1 70 ]
+"495
+} 0
+"233
+[v _V_ProgReloj V_ProgReloj `(v  1 e 0 0 ]
+{
+"242
+[v V_ProgReloj@posicion posicion `i  1 a 2 76 ]
+"241
+[v V_ProgReloj@minuto_tr minuto_tr `uc  1 a 1 75 ]
+"240
+[v V_ProgReloj@hora_tr hora_tr `uc  1 a 1 74 ]
+"239
+[v V_ProgReloj@anio_tr anio_tr `uc  1 a 1 73 ]
+"238
+[v V_ProgReloj@mes_tr mes_tr `uc  1 a 1 72 ]
+"237
+[v V_ProgReloj@dia_tr dia_tr `uc  1 a 1 71 ]
+"236
+[v V_ProgReloj@diasem_tr diasem_tr `uc  1 a 1 70 ]
+"344
+} 0
+"503
+[v _Write_RTC Write_RTC `(v  1 e 0 0 ]
+{
+"532
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"11
+[v ___awdiv@quotient quotient `i  1 a 2 6 ]
+"12
+[v ___awdiv@sign sign `uc  1 a 1 5 ]
+[v ___awdiv@counter counter `uc  1 a 1 4 ]
+"8
+[v ___awdiv@dividend dividend `i  1 p 2 0 ]
+[v ___awdiv@divisor divisor `i  1 p 2 2 ]
+"42
+} 0
+"34 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteTime.c
+[v _RtccWriteTime RtccWriteTime `(E7337  1 e 1 0 ]
+{
+[s S1493 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
+"36
+[s S1496 . 2 `uc 1 b0 1 0 :1:0 
+`uc 1 b1 1 0 :1:1 
+`uc 1 b2 1 0 :1:2 
+`uc 1 b3 1 0 :1:3 
+`uc 1 b4 1 0 :1:4 
+`uc 1 b5 1 0 :1:5 
+`uc 1 b6 1 0 :1:6 
+`uc 1 b7 1 0 :1:7 
+`uc 1 b8 1 1 :1:0 
+`uc 1 b9 1 1 :1:1 
+`uc 1 b10 1 1 :1:2 
+`uc 1 b11 1 1 :1:3 
+`uc 1 b12 1 1 :1:4 
+`uc 1 b13 1 1 :1:5 
+`uc 1 b14 1 1 :1:6 
+`uc 1 b15 1 1 :1:7 
+]
+[u S1513 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1493 1 byte 2 0 `S1496 1 bits 2 0 ]
+[v RtccWriteTime@tempHourWDay tempHourWDay `S1513  1 a 2 9 ]
+"37
+[v RtccWriteTime@tempMinSec tempMinSec `S1513  1 a 2 7 ]
+"40
+[v RtccWriteTime@wasWrEn wasWrEn `E7121  1 a 1 6 ]
+"42
+[v RtccWriteTime@wasAlrm wasAlrm `E7121  1 a 1 5 ]
+"41
+[v RtccWriteTime@wasOn wasOn `E7121  1 a 1 4 ]
+[s S147 . 4 `uc 1 rsvd 1 0 `uc 1 sec 1 1 `uc 1 min 1 2 `uc 1 hour 1 3 ]
+"34
+[u S152 . 4 `S147 1 f 4 0 `[4]uc 1 b 4 0 `[2]ui 1 w 4 0 `ul 1 l 4 0 ]
+[v RtccWriteTime@pTm pTm `*.39CS152  1 p 2 0 ]
+[v RtccWriteTime@di di `E7121  1 p 1 2 ]
+"113
+} 0
+"35 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteDate.c
+[v _RtccWriteDate RtccWriteDate `(E7337  1 e 1 0 ]
+{
+[s S1493 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
+"37
+[s S1496 . 2 `uc 1 b0 1 0 :1:0 
+`uc 1 b1 1 0 :1:1 
+`uc 1 b2 1 0 :1:2 
+`uc 1 b3 1 0 :1:3 
+`uc 1 b4 1 0 :1:4 
+`uc 1 b5 1 0 :1:5 
+`uc 1 b6 1 0 :1:6 
+`uc 1 b7 1 0 :1:7 
+`uc 1 b8 1 1 :1:0 
+`uc 1 b9 1 1 :1:1 
+`uc 1 b10 1 1 :1:2 
+`uc 1 b11 1 1 :1:3 
+`uc 1 b12 1 1 :1:4 
+`uc 1 b13 1 1 :1:5 
+`uc 1 b14 1 1 :1:6 
+`uc 1 b15 1 1 :1:7 
+]
+[u S1513 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1493 1 byte 2 0 `S1496 1 bits 2 0 ]
+[v RtccWriteDate@tempHourWDay tempHourWDay `S1513  1 a 2 11 ]
+"38
+[v RtccWriteDate@tempDayMonth tempDayMonth `S1513  1 a 2 9 ]
+"39
+[v RtccWriteDate@tempYear tempYear `S1513  1 a 2 6 ]
+"41
+[v RtccWriteDate@wasWrEn wasWrEn `E7121  1 a 1 8 ]
+"43
+[v RtccWriteDate@wasAlrm wasAlrm `E7121  1 a 1 5 ]
+"42
+[v RtccWriteDate@wasOn wasOn `E7121  1 a 1 4 ]
+[s S157 . 4 `uc 1 wday 1 0 `uc 1 mday 1 1 `uc 1 mon 1 2 `uc 1 year 1 3 ]
+"35
+[u S162 . 4 `S157 1 f 4 0 `[4]uc 1 b 4 0 `[2]ui 1 w 4 0 `ul 1 l 4 0 ]
+[v RtccWriteDate@pDt pDt `*.39CS162  1 p 2 0 ]
+[v RtccWriteDate@di di `E7121  1 p 1 2 ]
+"118
+} 0
+"21 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWrOn.c
+[v _RtccWrOn RtccWrOn `(v  1 e 0 0 ]
+{
+"46
+} 0
+"213 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _V_Principal V_Principal `(v  1 e 0 0 ]
 {
-"226
+"217
 [v V_Principal@cte cte `*.39uc  1 a 2 68 ]
-"237
+"227
 } 0
-"325
+"574
 [v _lee_temperatura lee_temperatura `(v  1 e 0 0 ]
 {
-"333
+"582
 } 0
-"292
+"541
 [v _Read_RTC Read_RTC `(v  1 e 0 0 ]
 {
-"317
+"566
 } 0
 "23 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccReadTime.c
 [v _RtccReadTime RtccReadTime `(v  1 e 0 0 ]
@@ -676,128 +841,6 @@ RTCCPTR_MASK_YEAR 3
 [v RtccReadDate@pDt pDt `*.39S162  1 p 2 0 ]
 "55
 } 0
-"372 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
-[v _ManejaMovimientos ManejaMovimientos `(v  1 e 0 0 ]
-{
-"380
-[v ManejaMovimientos@posicion posicion `i  1 a 2 76 ]
-"379
-[v ManejaMovimientos@minuto_tr minuto_tr `uc  1 a 1 75 ]
-"378
-[v ManejaMovimientos@hora_tr hora_tr `uc  1 a 1 74 ]
-"377
-[v ManejaMovimientos@anio_tr anio_tr `uc  1 a 1 73 ]
-"376
-[v ManejaMovimientos@mes_tr mes_tr `uc  1 a 1 72 ]
-"375
-[v ManejaMovimientos@dia_tr dia_tr `uc  1 a 1 71 ]
-"374
-[v ManejaMovimientos@diasem_tr diasem_tr `uc  1 a 1 70 ]
-"489
-} 0
-"254
-[v _Write_RTC Write_RTC `(v  1 e 0 0 ]
-{
-"283
-} 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\awdiv.c
-[v ___awdiv __awdiv `(i  1 e 2 0 ]
-{
-"11
-[v ___awdiv@quotient quotient `i  1 a 2 6 ]
-"12
-[v ___awdiv@sign sign `uc  1 a 1 5 ]
-[v ___awdiv@counter counter `uc  1 a 1 4 ]
-"8
-[v ___awdiv@dividend dividend `i  1 p 2 0 ]
-[v ___awdiv@divisor divisor `i  1 p 2 2 ]
-"42
-} 0
-"34 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteTime.c
-[v _RtccWriteTime RtccWriteTime `(E7337  1 e 1 0 ]
-{
-[s S1431 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
-"36
-[s S1434 . 2 `uc 1 b0 1 0 :1:0 
-`uc 1 b1 1 0 :1:1 
-`uc 1 b2 1 0 :1:2 
-`uc 1 b3 1 0 :1:3 
-`uc 1 b4 1 0 :1:4 
-`uc 1 b5 1 0 :1:5 
-`uc 1 b6 1 0 :1:6 
-`uc 1 b7 1 0 :1:7 
-`uc 1 b8 1 1 :1:0 
-`uc 1 b9 1 1 :1:1 
-`uc 1 b10 1 1 :1:2 
-`uc 1 b11 1 1 :1:3 
-`uc 1 b12 1 1 :1:4 
-`uc 1 b13 1 1 :1:5 
-`uc 1 b14 1 1 :1:6 
-`uc 1 b15 1 1 :1:7 
-]
-[u S1451 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1431 1 byte 2 0 `S1434 1 bits 2 0 ]
-[v RtccWriteTime@tempHourWDay tempHourWDay `S1451  1 a 2 9 ]
-"37
-[v RtccWriteTime@tempMinSec tempMinSec `S1451  1 a 2 7 ]
-"40
-[v RtccWriteTime@wasWrEn wasWrEn `E7121  1 a 1 6 ]
-"42
-[v RtccWriteTime@wasAlrm wasAlrm `E7121  1 a 1 5 ]
-"41
-[v RtccWriteTime@wasOn wasOn `E7121  1 a 1 4 ]
-[s S147 . 4 `uc 1 rsvd 1 0 `uc 1 sec 1 1 `uc 1 min 1 2 `uc 1 hour 1 3 ]
-"34
-[u S152 . 4 `S147 1 f 4 0 `[4]uc 1 b 4 0 `[2]ui 1 w 4 0 `ul 1 l 4 0 ]
-[v RtccWriteTime@pTm pTm `*.39CS152  1 p 2 0 ]
-[v RtccWriteTime@di di `E7121  1 p 1 2 ]
-"113
-} 0
-"35 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWriteDate.c
-[v _RtccWriteDate RtccWriteDate `(E7337  1 e 1 0 ]
-{
-[s S1431 . 2 `uc 1 LB 1 0 `uc 1 HB 1 1 ]
-"37
-[s S1434 . 2 `uc 1 b0 1 0 :1:0 
-`uc 1 b1 1 0 :1:1 
-`uc 1 b2 1 0 :1:2 
-`uc 1 b3 1 0 :1:3 
-`uc 1 b4 1 0 :1:4 
-`uc 1 b5 1 0 :1:5 
-`uc 1 b6 1 0 :1:6 
-`uc 1 b7 1 0 :1:7 
-`uc 1 b8 1 1 :1:0 
-`uc 1 b9 1 1 :1:1 
-`uc 1 b10 1 1 :1:2 
-`uc 1 b11 1 1 :1:3 
-`uc 1 b12 1 1 :1:4 
-`uc 1 b13 1 1 :1:5 
-`uc 1 b14 1 1 :1:6 
-`uc 1 b15 1 1 :1:7 
-]
-[u S1451 . 2 `us 1 Val 2 0 `[2]uc 1 v 2 0 `S1431 1 byte 2 0 `S1434 1 bits 2 0 ]
-[v RtccWriteDate@tempHourWDay tempHourWDay `S1451  1 a 2 11 ]
-"38
-[v RtccWriteDate@tempDayMonth tempDayMonth `S1451  1 a 2 9 ]
-"39
-[v RtccWriteDate@tempYear tempYear `S1451  1 a 2 6 ]
-"41
-[v RtccWriteDate@wasWrEn wasWrEn `E7121  1 a 1 8 ]
-"43
-[v RtccWriteDate@wasAlrm wasAlrm `E7121  1 a 1 5 ]
-"42
-[v RtccWriteDate@wasOn wasOn `E7121  1 a 1 4 ]
-[s S157 . 4 `uc 1 wday 1 0 `uc 1 mday 1 1 `uc 1 mon 1 2 `uc 1 year 1 3 ]
-"35
-[u S162 . 4 `S157 1 f 4 0 `[4]uc 1 b 4 0 `[2]ui 1 w 4 0 `ul 1 l 4 0 ]
-[v RtccWriteDate@pDt pDt `*.39CS162  1 p 2 0 ]
-[v RtccWriteDate@di di `E7121  1 p 1 2 ]
-"118
-} 0
-"21 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\pic18\plib\rtcc\RtccWrOn.c
-[v _RtccWrOn RtccWrOn `(v  1 e 0 0 ]
-{
-"46
-} 0
 "84 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/lcd.h
 [v _Lcd_Out Lcd_Out `(v  1 e 0 0 ]
 {
@@ -819,14 +862,14 @@ RTCCPTR_MASK_YEAR 3
 [v Lcd_Chr_CP@data data `uc  1 a 1 2 ]
 "137
 } 0
-"335 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
+"584 C:\Users\homer\Desktop\Electronica\TRABAJO PRACTICO 2\LCD_4x20/main.c
 [v _Convert_diasem Convert_diasem `(*.39uc  1 e 2 0 ]
 {
-"337
+"586
 [v Convert_diasem@buffer_dia buffer_dia `[20]uc  1 a 20 43 ]
-"335
+"584
 [v Convert_diasem@dia dia `i  1 p 2 39 ]
-"370
+"619
 } 0
 "492 C:\Program Files (x86)\Microchip\xc8\v1.34\sources\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
