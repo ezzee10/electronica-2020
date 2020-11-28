@@ -80,15 +80,15 @@ char Flag_1 = 0;
 int i;
 char CuentamSeg = 0; //Para lectura del RTCC
 char lectura = 0; //Lectura del conversor analogico
-float Temp_prog = 22.5; //Temperatura programada
-float Grados = 20; //Temperatura leida
-char inicio_hora_ilum = 23;
-char inicio_min_ilum = 59;
-char fin_hora_ilum = 0;
+float temp_prog= 25.3; //Temperatura programada
+float grados = 20; //Temperatura leida
+char inicio_hora_ilum = 20;
+char inicio_min_ilum = 0;
+char fin_hora_ilum = 22;
 char fin_min_ilum = 0;
 char inicio_hora_riego = 23;
-char inicio_min_riego = 59;
-char fin_hora_riego = 0;
+char inicio_min_riego = 0;
+char fin_hora_riego = 24;
 char fin_min_riego = 0;
 
 
@@ -108,9 +108,12 @@ char fin_min_riego = 0;
 void V_Principal(void);
 void V_ProgReloj(void);
 void V_ProgRiegoIlum(void);
+void V_ProgTempAgua(void);
+void V_Reiniciar(void);
 char* Convert_diasem(int dia);
 void control_leds_iluminacion(void);
 void control_leds_riego(void);
+void control_temperatura_agua(void);
 void lee_temperatura(void);
 void Write_RTC(void);
 void Read_RTC(void);
@@ -183,29 +186,30 @@ void main() {
         //CuentamSeg++;
         //if (CuentamSeg >= 26){CuentamSeg = 0;V_Principal();}
         V_Principal();
+        
         control_leds_iluminacion();
         control_leds_riego();
+        control_temperatura_agua();
+        sprintf(buffer1, "%03u", lectura);
+        Lcd_Out(1, 0, buffer1);
+       
+        
+        
         if (SW_Left == 0) {
 
             V_ProgReloj();
         }
 
         if (SW_Down == 0) {
-            sprintf(buffer1, "%03u", lectura);
-            Lcd_Out(4, 0, buffer1);
+            V_Reiniciar();
         }
 
         if (SW_Right == 0) {
-            Lcd_Out(3, 0, "RIGHT             ");
+            V_ProgTempAgua();
         }
 
         if (SW_Up == 0) {
             V_ProgRiegoIlum();
-        }
-
-        if (SW_Center == 0) {
-            Lcd_Cmd(LCD_CLEAR);
-            Lcd_Out(2, 0, "CENTER             ");
         }
 
     }
@@ -215,27 +219,23 @@ void main() {
  Funcion V_Principal
  ***********************************************************************************/
 void V_Principal(void) {
-    Read_RTC();
-    lee_temperatura();
-    Lcd_Out(1, 0, "                    ");
+    //Lcd_Out(1, 0, "Ventana principal   ");
+    Read_RTC(); 
     char* cte = Convert_diasem(diasem);
-
     Lcd_Out(2, 0, cte);
-
     sprintf(buffer1, "%02u/%02u/%02u             ", dia, mes, anio);
     Lcd_Out(3, 0, buffer1);
     sprintf(buffer1, "%02u:%02u:%02u             ", hora, minuto, segundo);
     Lcd_Out(4, 0, buffer1);
-    //lcd_comand(0x14);              //Cursor a la Derecha
-    //lcd_putrs("TA 22,5");
+
 }
 
 /**********************************************************************************
  Funcion V_ProgReloj
  ***********************************************************************************/
 void V_ProgReloj(void) {
+    
     Lcd_Out(1, 0, "Program del reloj");
-
     char diasem_tr = diasem;
     char dia_tr = dia;
     char mes_tr = mes;
@@ -561,6 +561,82 @@ void V_ProgRiegoIlum(void) {
     Lcd_Cmd(LCD_CURSOR_OFF);
 }
 
+/**********************************************************************************
+ Funcion V_ProgTempAgua(void);
+ ***********************************************************************************/
+void V_ProgTempAgua(void) {
+    
+    
+    float temp_prog_tr = temp_prog;
+    
+    Lcd_Out(1, 0, "Programacion de la  ");
+    Lcd_Out(2, 0, "Temperatura del agua");
+    Lcd_Out(3, 0, "                    ");
+    sprintf(buffer1, "Temperatura: %.1f%cC", temp_prog, 223);
+    Lcd_Out(4, 0, buffer1);
+    
+    Lcd_Out(4, 13, "");
+    Lcd_Cmd(LCD_UNDERLINE_ON);
+    
+    for (i = 0; i < 30; i++) {
+        __delay_ms(90);
+        
+        if (SW_Up == 0) {
+            i = 0;
+            if (temp_prog_tr < 33.1) {temp_prog_tr+=0.1; }
+                sprintf(buffer1, "%0.1f", temp_prog_tr);
+                Lcd_Out(4, 13, buffer1);
+                Lcd_Out(4, 13, "");
+        }
+
+
+
+        if (SW_Down == 0) {
+            i = 0;
+            if (temp_prog_tr > 0) {temp_prog_tr-=0.1; }
+                sprintf(buffer1, "%.1f", temp_prog_tr);
+                Lcd_Out(4, 13, buffer1);
+                Lcd_Out(4, 13, "");
+    
+        }
+
+
+        if (SW_Center == 0) {
+          temp_prog = temp_prog_tr;
+         // Write_RTC();
+          break;
+        }
+    }
+    Lcd_Cmd(LCD_CURSOR_OFF);
+}
+
+/**********************************************************************************
+ Funcion V_Reiniciar(void);
+ ***********************************************************************************/
+
+void V_Reiniciar(void) {
+    
+    anio = 20; 
+    mes = 11; 
+    diasem = 0; 
+    dia = 6; 
+    hora = 23; 
+    minuto = 58; 
+    segundo = 0; 
+    lectura = 0; 
+    temp_prog= 25.3; 
+    grados = 20; 
+    inicio_hora_ilum = 20;
+    inicio_min_ilum = 0;
+    fin_hora_ilum = 22;
+    fin_min_ilum = 0;
+    inicio_hora_riego = 23;
+    inicio_min_riego = 0;
+    fin_hora_riego = 24;
+    fin_min_riego = 0;
+    
+}
+
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 // Funcion Write_RTC
 // Permite capturar los datos del RTC y cargarlos en los registros correspondientes
@@ -714,4 +790,22 @@ void control_leds_riego(){
     if(fin_hora_riego == hora && fin_min_riego == minuto){
         RIEGO_off;
     }
+}
+
+void control_temperatura_agua(){
+    
+    lee_temperatura();
+    grados = lectura * 0.13;
+    float grados_tr = ((int)(grados*10)) / 10.0;
+    
+    if(grados_tr == temp_prog || (grados_tr-temp_prog <= 0.3 && grados_tr-temp_prog > 0) ||
+            (temp_prog- grados_tr <= 0.3 && temp_prog-grados_tr > 0)) {
+        TEMP_on;
+    }else{
+        TEMP_off;
+    }
+    
+
+ 
+    
 }

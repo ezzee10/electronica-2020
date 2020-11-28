@@ -10122,8 +10122,8 @@ char Flag_1 = 0;
 int i;
 char CuentamSeg = 0;
 char lectura = 0;
-float Temp_prog = 22.5;
-float Grados = 20;
+float temp_prog= 33.1;
+float grados = 20;
 char inicio_hora_ilum = 23;
 char inicio_min_ilum = 59;
 char fin_hora_ilum = 0;
@@ -10137,14 +10137,16 @@ char fin_min_riego = 0;
 void V_Principal(void);
 void V_ProgReloj(void);
 void V_ProgRiegoIlum(void);
+void V_ProgTempAgua(void);
 char* Convert_diasem(int dia);
 void control_leds_iluminacion(void);
 void control_leds_riego(void);
+void control_temperatura_agua(void);
 void lee_temperatura(void);
 void Write_RTC(void);
 void Read_RTC(void);
 
-# 143
+# 145
 void main() {
 OSCTUNEbits.INTSRC = 1;
 OSCTUNEbits.PLLEN = 0;
@@ -10188,8 +10190,15 @@ while (1) {
 
 
 V_Principal();
+
 control_leds_iluminacion();
 control_leds_riego();
+control_temperatura_agua();
+sprintf(buffer1, "%03u", lectura);
+Lcd_Out(1, 0, buffer1);
+
+
+
 if (Sw_Left = PORTAbits.RA0 == 0) {
 
 V_ProgReloj();
@@ -10201,7 +10210,7 @@ Lcd_Out(4, 0, buffer1);
 }
 
 if (Sw_Right = PORTAbits.RA2 == 0) {
-Lcd_Out(3, 0, "RIGHT             ");
+V_ProgTempAgua();
 }
 
 if (Sw_Up = PORTAbits.RA3 == 0) {
@@ -10216,27 +10225,23 @@ Lcd_Out(2, 0, "CENTER             ");
 }
 }
 
-# 217
+# 226
 void V_Principal(void) {
+
 Read_RTC();
-lee_temperatura();
-Lcd_Out(1, 0, "                    ");
 char* cte = Convert_diasem(diasem);
-
 Lcd_Out(2, 0, cte);
-
 sprintf(buffer1, "%02u/%02u/%02u             ", dia, mes, anio);
 Lcd_Out(3, 0, buffer1);
 sprintf(buffer1, "%02u:%02u:%02u             ", hora, minuto, segundo);
 Lcd_Out(4, 0, buffer1);
 
-
 }
 
-# 236
+# 241
 void V_ProgReloj(void) {
-Lcd_Out(1, 0, "Program del reloj");
 
+Lcd_Out(1, 0, "Program del reloj");
 char diasem_tr = diasem;
 char dia_tr = dia;
 char mes_tr = mes;
@@ -10375,7 +10380,7 @@ Lcd_Cmd(12);
 
 }
 
-# 381
+# 386
 void V_ProgRiegoIlum(void) {
 
 Lcd_Out(1, 0, "Riego");
@@ -10559,7 +10564,54 @@ break;
 Lcd_Cmd(12);
 }
 
-# 570
+# 572
+void V_ProgTempAgua(void) {
+
+
+float temp_prog_tr = temp_prog;
+
+Lcd_Out(1, 0, "Programacion de la  ");
+Lcd_Out(2, 0, "Temperatura del agua");
+Lcd_Out(3, 0, "                    ");
+sprintf(buffer1, "Temperatura: %.1f%cC", temp_prog, 223);
+Lcd_Out(4, 0, buffer1);
+
+Lcd_Out(4, 13, "");
+Lcd_Cmd(14);
+
+for (i = 0; i < 30; i++) {
+_delay((unsigned long)((90)*(8000000/4000.0)));
+
+if (Sw_Up = PORTAbits.RA3 == 0) {
+i = 0;
+if (temp_prog_tr < 33.1) {temp_prog_tr+=0.1; }
+sprintf(buffer1, "%0.1f", temp_prog_tr);
+Lcd_Out(4, 13, buffer1);
+Lcd_Out(4, 13, "");
+}
+
+
+
+if (Sw_Down = PORTCbits.RC4 == 0) {
+i = 0;
+if (temp_prog_tr > 0) {temp_prog_tr-=0.1; }
+sprintf(buffer1, "%.1f", temp_prog_tr);
+Lcd_Out(4, 13, buffer1);
+Lcd_Out(4, 13, "");
+
+}
+
+
+if (Sw_Center = PORTAbits.RA5 == 0) {
+temp_prog = temp_prog_tr;
+
+break;
+}
+}
+Lcd_Cmd(12);
+}
+
+# 624
 void Write_RTC(void) {
 RtccWrOn();
 
@@ -10590,7 +10642,7 @@ RtccWriteDate(&RtccDate, 1);
 (RTCCFGbits.RTCEN=1);
 }
 
-# 607
+# 661
 void Read_RTC(void)
 
 {
@@ -10618,7 +10670,7 @@ mes = mes_d * 10 + mes_u;
 anio = anio_d * 10 + anio_u;
 }
 
-# 640
+# 694
 void lee_temperatura(void) {
 
 ADCON0bits.ADON = 1;
@@ -10696,4 +10748,22 @@ LATBbits.LATB6 = 1;
 if(fin_hora_riego == hora && fin_min_riego == minuto){
 LATBbits.LATB6 = 0;
 }
+}
+
+void control_temperatura_agua(){
+
+lee_temperatura();
+grados = lectura * 0.13;
+float grados_tr = ((int)(grados*10)) / 10.0;
+
+if(grados_tr == temp_prog || (grados_tr-temp_prog <= 0.3 && grados_tr-temp_prog > 0) ||
+(temp_prog- grados_tr <= 0.3 && temp_prog-grados_tr > 0)) {
+LATAbits.LA1 = 1;
+}else{
+LATAbits.LA1 = 0;
+}
+
+
+
+
 }
