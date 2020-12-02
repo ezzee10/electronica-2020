@@ -56,8 +56,8 @@ int anio = 20; //año 2020 -> 00001110
 int mes = 11; //mes enero-> 00000001 (1) .... dici-> 00001100 (12)
 int diasem = 0; //0 Dom , 1 Lun , 2 Mar......, 6 Sab
 int dia = 6; //dia 01 -> 00000001.....31 -> 00011111
-int hora = 23; //hora 00 -> 00000000.....24 -> 00011000
-int minuto = 58; //variables de numeros enteros que permiten
+int hora = 22; //hora 00 -> 00000000.....24 -> 00011000
+int minuto = 55; //variables de numeros enteros que permiten
 int segundo = 0; //representar los valores en el LCD
 
 
@@ -80,16 +80,16 @@ char Flag_1 = 0;
 int i;
 char CuentamSeg = 0; //Para lectura del RTCC
 char lectura = 0; //Lectura del conversor analogico
-float temp_prog= 25.3; //Temperatura programada
+float temp_prog= 25.5; //Temperatura programada
 float grados = 20; //Temperatura leida
 char inicio_hora_ilum = 20;
 char inicio_min_ilum = 0;
 char fin_hora_ilum = 22;
 char fin_min_ilum = 0;
-char inicio_hora_riego = 23;
+char inicio_hora_riego = 22;
 char inicio_min_riego = 0;
-char fin_hora_riego = 23;
-char fin_min_riego = 59;
+char fin_hora_riego = 21;
+char fin_min_riego = 55;
 
 
 #define ILUM_on         LATBbits.LATB7 = 1
@@ -244,7 +244,7 @@ void V_ProgReloj(void) {
     Lcd_Out(2, 0, cte);
     sprintf(buffer1, "%02u/%02u/%02u             ", dia, mes, anio);
     Lcd_Out(3, 0, buffer1);
-    sprintf(buffer1, "%02u:%02u:%02u  ", hora, minuto, segundo);
+    sprintf(buffer1, "%02u:%02u       ", hora, minuto);
     Lcd_Out(4, 0, buffer1);
     char diasem_tr = diasem;
     char dia_tr = dia;
@@ -283,38 +283,22 @@ void V_ProgReloj(void) {
                 if (mes_tr < 12) {
                     mes_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", mes_tr);
-                Lcd_Out(3, 3, buffer1);
-                Lcd_Out(3, 3, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(3,3,"%02u", mes_tr );
             } else if (posicion == 6) {
                 if (anio_tr < 99) {
                     anio_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", anio_tr);
-                Lcd_Out(3, 6, buffer1);
-                Lcd_Out(3, 6, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(3,6, "%02u", anio_tr);
             } else if (posicion == 8) {
                 if (hora_tr < 23) {
                     hora_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", hora_tr);
-                Lcd_Out(4, 0, buffer1);
-                Lcd_Out(4, 0, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,0, "%02u", hora_tr);
             } else if (posicion == 10) {
                 if (minuto_tr < 59) {
                     minuto_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", minuto_tr);
-                Lcd_Out(4, 3, buffer1);
-                Lcd_Out(4, 3, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,3, "%02u", minuto_tr);
             }
         }
 
@@ -348,46 +332,27 @@ void V_ProgReloj(void) {
                 if (dia_tr > 1) {
                     dia_tr--;
                 }
-                 Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", dia_tr);
-                Lcd_Out(3, 0, buffer1);
-                Lcd_Out(3, 0, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(3,0, "%02u", dia_tr);
             } else if (posicion == 4) {
                 if (mes_tr > 1) {
                     mes_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", mes_tr);
-                Lcd_Out(3, 3, buffer1);
-                Lcd_Out(3, 3, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(3,3, "%02u", mes_tr);
             } else if (posicion == 6) {
                 if (anio_tr > 20) {
                     anio_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", anio_tr);
-                Lcd_Out(3, 6, buffer1);
-                Lcd_Out(3, 6, "");
+                escribir(3,6, "%02u", anio_tr);
             } else if (posicion == 8) {
                 if (hora_tr > 0) {
                     hora_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", hora_tr);
-                Lcd_Out(4, 0, buffer1);
-                Lcd_Out(4, 0, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,0, "%02u", hora_tr);
             } else if (posicion == 10) {
                 if (minuto_tr > 0) {
                     minuto_tr--;
                 }
-                 Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", minuto_tr);
-                Lcd_Out(4, 3, buffer1);
-                Lcd_Out(4, 3, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,3, "%02u", minuto_tr);
             }
         }
 
@@ -399,7 +364,6 @@ void V_ProgReloj(void) {
             hora = hora_tr;
             minuto = minuto_tr;
             Write_RTC();
-            //  CuentamSeg = 26;
             break;
         }
     }
@@ -426,12 +390,12 @@ void V_ProgRiegoIlum(void) {
 
     char i_hora_ilum_tr = inicio_hora_ilum;
     char i_min_ilum_tr = inicio_min_ilum;
-    char d_hora_ilum_tr = fin_hora_ilum;
-    char d_min_ilum_tr = fin_min_ilum;
+    char f_hora_ilum_tr = fin_hora_ilum;
+    char f_min_ilum_tr = fin_min_ilum;
     char i_hora_riego_tr = inicio_hora_riego;
     char i_min_riego_tr = inicio_min_riego;
-    char d_hora_riego_tr = fin_hora_riego;
-    char d_min_riego_tr = fin_min_riego;
+    char f_hora_riego_tr = fin_hora_riego;
+    char f_min_riego_tr = fin_min_riego;
     int posicion = 0;
     Lcd_Cmd(LCD_BLINK_CURSOR_ON);
     Lcd_Out(2, 5, "");
@@ -445,73 +409,42 @@ void V_ProgRiegoIlum(void) {
                 if (i_hora_riego_tr < 23) {
                     i_hora_riego_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_hora_riego_tr);
-                Lcd_Out(2, 5, buffer1);
-                Lcd_Out(2, 5, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,5, "%02u", i_hora_riego_tr);
             } else if (posicion == 2) {
                 if (i_min_riego_tr < 59) {
                     i_min_riego_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_min_riego_tr);
-                Lcd_Out(2, 8, buffer1);
-                Lcd_Out(2, 8, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,8, "%02u", i_min_riego_tr);
             } else if (posicion == 4) {
-                if (d_hora_riego_tr < 3) {
-                    d_hora_riego_tr++;
+                if (f_hora_riego_tr < 23) {
+                    f_hora_riego_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_hora_riego_tr);
-                Lcd_Out(2, 15, buffer1);
-                Lcd_Out(2, 15, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,15, "%02u", f_hora_riego_tr);
             } else if (posicion == 6) {
-                if (d_min_riego_tr < 59) {
-                    d_min_riego_tr++;
+                if (f_min_riego_tr < 59) {
+                    f_min_riego_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_min_riego_tr);
-                Lcd_Out(2, 18, buffer1);
-                Lcd_Out(2, 18, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,18, "%02u", f_min_riego_tr);
             } else if (posicion == 8) {
                 if (i_hora_ilum_tr < 23) {
                     i_hora_ilum_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_hora_ilum_tr);
-                Lcd_Out(4, 5, buffer1);
-                Lcd_Out(4, 5, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,5, "%02u", i_hora_ilum_tr);
             } else if (posicion == 10) {
                 if (i_min_ilum_tr < 59) {
                     i_min_ilum_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_min_ilum_tr);
-                Lcd_Out(4, 8, buffer1);
-                Lcd_Out(4, 8, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,8, "%02u", i_min_ilum_tr);
             } else if (posicion == 12) {
-                if (d_hora_ilum_tr < 23) {
-                    d_hora_ilum_tr++;
+                if (f_hora_ilum_tr < 23) {
+                    f_hora_ilum_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_hora_ilum_tr);
-                Lcd_Out(4, 15, buffer1);
-                Lcd_Out(4, 15, "");
+                escribir(4,15, "%02u", f_hora_ilum_tr);
             } else if (posicion == 14) {
-                if (d_min_ilum_tr < 59) {
-                    d_min_ilum_tr++;
+                if (f_min_ilum_tr < 59) {
+                    f_min_ilum_tr++;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_min_ilum_tr);
-                Lcd_Out(4, 18, buffer1);
-                Lcd_Out(4, 18, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,18, "%02u", f_min_ilum_tr);
             }
         }
 
@@ -537,72 +470,42 @@ void V_ProgRiegoIlum(void) {
                 if (i_hora_riego_tr > 0) {
                     i_hora_riego_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_hora_riego_tr);
-                Lcd_Out(2, 5, buffer1);
-                Lcd_Out(2, 5, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,5, "%02u", i_hora_riego_tr);
             } else if (posicion == 2) {
                 if (i_min_riego_tr > 0) {
                     i_min_riego_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_min_riego_tr);
-                Lcd_Out(2, 8, buffer1);
-                Lcd_Out(2, 8, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,8, "%02u", i_min_riego_tr);
             } else if (posicion == 4) {
-                if (d_hora_riego_tr > 0) {
-                    d_hora_riego_tr--;
+                if (f_hora_riego_tr > 0) {
+                    f_hora_riego_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_hora_riego_tr);
-                Lcd_Out(2, 15, buffer1);
-                Lcd_Out(2, 15, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(2,15, "%02u", f_hora_riego_tr);
             } else if (posicion == 6) {
-                if (d_min_riego_tr > 0) {
-                    d_min_riego_tr--;
+                if (f_min_riego_tr > 0) {
+                    f_min_riego_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_min_riego_tr);
-                Lcd_Out(2, 18, buffer1);
-                Lcd_Out(2, 18, "");
+                escribir(2,18, "%02u", f_min_riego_tr);
             } else if (posicion == 8) {
                 if (i_hora_ilum_tr > 0) {
                     i_hora_ilum_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_hora_ilum_tr);
-                Lcd_Out(4, 5, buffer1);
-                Lcd_Out(4, 5, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,5, "%02u", i_hora_ilum_tr);
             } else if (posicion == 10) {
                 if (i_min_ilum_tr > 0) {
                     i_min_ilum_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", i_min_ilum_tr);
-                Lcd_Out(4, 8, buffer1);
-                Lcd_Out(4, 8, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,8, "%02u", i_min_ilum_tr);
             } else if (posicion == 12) {
-                if (d_hora_ilum_tr > 0) {
-                    d_hora_ilum_tr--;
+                if (f_hora_ilum_tr > 0) {
+                    f_hora_ilum_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_hora_ilum_tr);
-                Lcd_Out(4, 15, buffer1);
-                Lcd_Out(4, 15, "");
+                escribir(4,15, "%02u", f_hora_ilum_tr);
             } else if (posicion == 14) {
-                if (d_min_ilum_tr > 0) {
-                    d_min_ilum_tr--;
+                if (f_min_ilum_tr > 0) {
+                    f_min_ilum_tr--;
                 }
-                Lcd_Cmd(LCD_CURSOR_OFF);
-                sprintf(buffer1, "%02u", d_min_ilum_tr);
-                Lcd_Out(4, 18, buffer1);
-                Lcd_Out(4, 18, "");
-                Lcd_Cmd(LCD_BLINK_CURSOR_ON);
+                escribir(4,18, "%02u", f_min_ilum_tr);
             }
         }
 
@@ -610,13 +513,13 @@ void V_ProgRiegoIlum(void) {
         if (SW_Center == 0) {
             inicio_hora_ilum = i_hora_ilum_tr;
             inicio_min_ilum = i_min_ilum_tr;
-            fin_hora_ilum = d_hora_ilum_tr;
-            fin_min_ilum = d_min_ilum_tr;
+            fin_hora_ilum = f_hora_ilum_tr;
+            fin_min_ilum = f_min_ilum_tr;
             inicio_hora_riego = i_hora_riego_tr;
             inicio_min_riego = i_min_riego_tr;
-            fin_hora_riego = d_hora_riego_tr;
-            fin_min_riego = d_min_riego_tr;
-            Write_RTC();
+            fin_hora_riego = f_hora_riego_tr;
+            fin_min_riego = f_min_riego_tr;
+          //  Write_RTC();
             break;
         }
     }
@@ -897,11 +800,20 @@ void control_temperatura_agua(){
     
     lee_temperatura();
     grados = lectura * 0.13;
-    float grados_tr = ((int)(grados*10)) / 10.0;
+    float grados_medidos = ((int)(grados*10)) / 10.0;
+    float temp_min;
+    float temp_max = temp_prog + 0.3;
     
-    if(grados_tr == temp_prog || (grados_tr-temp_prog <= 0.3 && grados_tr-temp_prog > 0) ||
-            (temp_prog- grados_tr <= 0.3 && temp_prog-grados_tr > 0)) {
+    if(temp_prog > 0.3){ //en caso de que la temperatura sea 0.2 o menor y no quede negativa
+        temp_min = temp_prog - 0.3;
+    }else{
+        temp_min = 0;
+    }
+    
+    if(grados_medidos < temp_min) {
         TEMP_on;
+    }else if(grados_medidos > temp_max){
+        TEMP_off;
     }else{
         TEMP_off;
     }
