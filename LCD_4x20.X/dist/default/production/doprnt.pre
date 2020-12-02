@@ -287,6 +287,22 @@ const static unsigned long dpowers[] = {1, 10, 100, 1000, 10000,
 
 };
 
+
+const static unsigned long hexpowers[] = {1, 0x10, 0x100, 0x1000,
+
+0x10000, 0x100000, 0x1000000, 0x10000000
+
+};
+
+
+const static unsigned long octpowers[] = {1, 010, 0100, 01000, 010000, 0100000,
+
+01000000,
+010000000, 0100000000, 01000000000, 010000000000,
+0100000000000
+
+};
+
 # 388
 extern const double _powers_[], _npowers_[];
 
@@ -386,7 +402,25 @@ flag = 0;
 for(;;) {
 switch(*f) {
 
-# 579
+case '-':
+flag |= 0x08;
+f++;
+continue;
+
+
+
+case ' ':
+flag |= 0x01;
+f++;
+continue;
+
+# 573
+case '#':
+flag |= 0x800;
+f++;
+continue;
+
+
 case '0':
 flag |= 0x04;
 f++;
@@ -396,7 +430,11 @@ continue;
 break;
 }
 
-# 597
+# 593
+if(flag & 0x08)
+flag &= ~0x04;
+
+
 if(isdigit((unsigned)*f)) {
 width = 0;
 do {
@@ -404,7 +442,10 @@ width *= 10;
 width += *f++ - '0';
 } while(isdigit((unsigned)*f));
 
-# 608
+} else if(*f == '*') {
+width = (*(int *)__va_arg((*(int **)ap), (int)0));
+f++;
+
 }
 
 
@@ -412,7 +453,11 @@ if(*f == '.') {
 flag |= 0x4000;
 f++;
 
-# 620
+if(*f == '*') {
+prec = (*(int *)__va_arg((*(int **)ap), (int)0));
+f++;
+} else
+
 {
 prec = 0;
 while(isdigit((unsigned)*f))
@@ -436,7 +481,36 @@ case 'f':
 flag |= 0x400;
 break;
 
-# 728
+# 689
+case 'o':
+
+flag |= 0x40;
+
+break;
+
+
+
+case 'd':
+case 'i':
+break;
+
+# 712
+case 'X':
+
+flag |= 0x20;
+
+
+
+case 'x':
+
+
+flag |= 0x80;
+
+break;
+
+
+
+
 case 's':
 
 # 734
@@ -465,14 +539,18 @@ width -= len;
 else
 width = 0;
 
-# 764
+if(!(flag & 0x08))
+
 while(width--)
 ((*sp++ = (' ')));
 
 while(len--)
 ((*sp++ = (*cp++)));
 
-# 774
+if(flag & 0x08)
+while(width--)
+((*sp++ = (' ')));
+
 continue;
 
 # 784
@@ -561,7 +639,8 @@ break;
 width -= prec + c + exp;
 if(
 
-# 1147
+flag & 0x800 ||
+
 prec)
 width--;
 if(flag & 0x03)
@@ -574,9 +653,13 @@ if(flag & 0x04) {
 
 if(flag & 0x03)
 
-((*sp++ = ('-')));
+((*sp++ = (flag & 0x01 ? '-' : '+')));
 
-# 1168
+# 1164
+if(flag & 0x01)
+((*sp++ = (' ')));
+
+
 while(width > 0) {
 ((*sp++ = ('0')));
 width--;
@@ -586,7 +669,9 @@ width--;
 
 {
 
-# 1180
+if(!(flag & 0x08))
+
+
 while(width > 0) {
 ((*sp++ = (' ')));
 width--;
@@ -597,9 +682,11 @@ width--;
 
 if(flag & 0x03)
 
-((*sp++ = ('-')));
+((*sp++ = (flag & 0x01 ? '-' : '+')));
 
-# 1195
+else if(flag & 0x01)
+((*sp++ = (' ')));
+
 }
 while(c--) {
 
@@ -622,10 +709,9 @@ else
 c = prec;
 prec -= c;
 
+if(c || flag & 0x800)
 
-
-if(c)
-
+# 1221
 ((*sp++ = ('.')));
 
 # 1227
@@ -642,11 +728,36 @@ while(prec) {
 prec--;
 }
 
-# 1245
+if((flag & 0x08) && width > 0)
+do
+((*sp++ = (' ')));
+while(--width);
+
 continue;
 }
 
-# 1273
+
+
+
+if((flag & (0xC0)) == 0x00)
+
+{
+
+# 1259
+val = (long)(*(int *)__va_arg((*(int **)ap), (int)0));
+
+if((long)val < 0) {
+flag |= 0x03;
+val = -val;
+}
+
+}
+
+else
+
+
+
+
 {
 
 # 1286
@@ -657,12 +768,49 @@ val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
 if(prec == 0 && val == 0)
 prec++;
 
-# 1305
+
+switch((unsigned char)(flag & (0xC0))) {
+
+
+
+
+case 0x00:
+
+
+case 0xC0:
+
+
 for(c = 1 ; c != sizeof dpowers/sizeof dpowers[0] ; c++)
 if(val < dpowers[c])
 break;
 
-# 1339
+break;
+
+
+
+
+case 0x80:
+
+for(c = 1 ; c != sizeof hexpowers/sizeof hexpowers[0] ; c++)
+if(val < hexpowers[c])
+break;
+
+break;
+
+# 1326
+case 0x40:
+
+for(c = 1 ; c != sizeof octpowers/sizeof octpowers[0] ; c++)
+if(val < octpowers[c])
+break;
+
+break;
+
+
+
+}
+
+
 if(c < prec)
 c = prec;
 else if(prec < c)
@@ -679,7 +827,31 @@ else
 width = 0;
 }
 
-# 1381
+
+
+if((flag & (
+
+0x04|
+
+(0xC0)|0x800)) == (0x40|0x800)) {
+if(width)
+width--;
+} else
+
+
+
+if((flag & ((0xC0)|0x800)) == (0x80|0x800)) {
+
+# 1372
+if(width > 2)
+width -= 2;
+else
+width = 0;
+}
+
+
+
+
 if(width > c)
 width -= c;
 else
@@ -694,7 +866,23 @@ if(flag & 0x04) {
 if(flag & 0x03)
 ((*sp++ = ('-')));
 
-# 1415
+
+else
+
+
+if(flag & 0x01)
+((*sp++ = (' ')));
+
+
+else if((flag & ((0xC0)|0x800)) == (0x80|0x800)) {
+((*sp++ = ('0')));
+
+((*sp++ = (flag & 0x20 ? 'X' : 'x')));
+
+# 1412
+}
+
+
 if(width)
 do
 ((*sp++ = ('0')));
@@ -706,7 +894,8 @@ while(--width);
 
 if(width
 
-# 1428
+&& !(flag & 0x08)
+
 )
 do
 ((*sp++ = (' ')));
@@ -716,24 +905,83 @@ while(--width);
 if(flag & 0x03)
 ((*sp++ = ('-')));
 
-# 1469
+
+
+else if(flag & 0x01)
+((*sp++ = (' ')));
+
+
+
+if((flag & ((0xC0)|0x800)) == (0x40|0x800))
+((*sp++ = ('0')));
+else
+
+
+
+if((flag & ((0xC0)|0x800)) == (0x80|0x800)) {
+
+# 1458
+((*sp++ = ('0')));
+
+((*sp++ = (flag & 0x20 ? 'X' : 'x')));
+
+# 1466
+}
+
+
 }
 
 # 1474
 while(prec--) {
 
-# 1478
+switch((unsigned char)(flag & (0xC0)))
+
 {
 
-# 1489
+
+
+
+case 0x00:
+
+
+case 0xC0:
+
+
 c = (val / dpowers[prec]) % 10 + '0';
 
-# 1523
+break;
+
+# 1497
+case 0x80:
+
+{
+unsigned char idx = (val / hexpowers[prec]) & 0xF;
+
+c = (flag & 0x20 ? "0123456789ABCDEF" : "0123456789abcdef")[idx];
+
+# 1508
+}
+
+break;
+
+# 1516
+case 0x40:
+
+c = ((val / octpowers[prec]) & 07) + '0';
+
+break;
+
+
 }
 ((*sp++ = (c)));
 }
 
-# 1533
+
+if((flag & 0x08) && width > 0)
+do
+((*sp++ = (' ')));
+while(--width);
+
 }
 
 alldone:
